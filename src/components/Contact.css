@@ -1,0 +1,38 @@
+.contact {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 40px 20px;
+}
+
+.contact h2 {
+  font-size: 1.8rem;
+  color: var(--color-light);
+  margin-bottom: 12px;
+}
+
+.contact ul {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: center;
+}
+
+.contact li {
+  margin: 0;
+}
+
+.contact a {
+  color: var(--color-primary);
+  text-decoration: none;
+  background: rgba(59,130,246,0.06);
+  padding: 8px 12px;
+  border-radius: 8px;
+}
+
+.contact a:hover {
+  background: rgba(59,130,246,0.12);
+}

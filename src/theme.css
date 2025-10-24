@@ -1,0 +1,67 @@
+:root {
+  /* Colores */
+  --color-primary: #3b82f6;
+  --color-secondary: #2563eb;
+  --color-background: #1c1c1c;
+  --color-text: #ddd;
+  --color-light: #f8f9fa;
+
+  /* Tipografía */
+  --font-family: 'Segoe UI', sans-serif;
+  --font-size-base: 16px;
+  --font-size-large: 1.5rem;
+  --font-size-small: 0.875rem;
+
+  /* Espaciado */
+  --spacing-small: 8px;
+  --spacing-medium: 16px;
+  --spacing-large: 32px;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: var(--color-background);
+  color: var(--color-text);
+  font-family: var(--font-family);
+  font-size: var(--font-size-base);
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: var(--color-light);
+  margin: var(--spacing-medium) 0;
+}
+
+p {
+  margin: var(--spacing-small) 0;
+  line-height: 1.6;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: var(--spacing-medium);
+}
+
+.btn {
+  padding: var(--spacing-small) var(--spacing-medium);
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  text-decoration: none;
+  font-size: var(--font-size-base);
+}
+
+.btn-primary {
+  background-color: var(--color-primary);
+  color: var(--color-light);
+}
+
+.btn-secondary {
+  background-color: var(--color-secondary);
+  color: var(--color-light);
+}
+
+.btn:hover {
+  opacity: 0.9;
+}

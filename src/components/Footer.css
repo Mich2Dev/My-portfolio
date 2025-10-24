@@ -1,0 +1,128 @@
+.footer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 28px 12px;
+  border-top: none;
+  /* slightly opaque overall footer text */
+  color: rgba(255,255,255,0.85);
+  background: transparent;
+}
+
+.footer-card {
+  max-width: 1000px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 18px 20px;
+  background-color: rgba(255,255,255,0.02);
+  border-radius: 12px;
+  box-shadow: 0 8px 26px rgba(0,0,0,0.42);
+  /* make inner text slightly translucent for a softer look */
+  color: rgba(255,255,255,0.92);
+}
+
+.footer-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  background-color: rgba(255,255,255,0.03);
+  padding: 18px;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.45);
+}
+
+.footer p, .footer a {
+  margin: 0;
+  font-size: 0.95rem;
+}
+
+.footer-links {
+  display: flex;
+  justify-content: center;
+  gap: 14px;
+  align-items: center;
+}
+
+.footer-contacts a {
+  color: var(--color-primary);
+  text-decoration: none;
+  background: none; /* no button background, keep links subtle */
+  padding: 0 4px;
+  border-radius: 4px;
+  font-weight: 600;
+  text-align: center;
+}
+
+.footer-links a:hover {
+  background: rgba(59,130,246,0.12);
+}
+
+@media (max-width: 720px) {
+  .footer-inner {
+    flex-direction: column;
+    text-align: center;
+  }
+  .footer-links { justify-content: center; }
+}
+
+/* Labeled contact items */
+.footer-contacts {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: center; /* centered on small screens */
+}
+
+
+.contact-item {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  color: rgba(255,255,255,0.92);
+  font-size: 0.95rem;
+  padding: 4px 6px;
+}
+
+.contact-label {
+  color: rgba(255,255,255,0.7); /* muted label color */
+  font-weight: 600;
+}
+
+.footer-contacts a {
+  color: var(--color-primary);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+@media (max-width: 520px) {
+  .footer-contacts { gap: 10px; }
+  .contact-item { width: 100%; justify-content: center; padding: 8px 0; }
+  .footer-card { padding: 14px; }
+  .footer p { opacity: 0.85; font-size: 0.9rem; text-align: center; }
+}
+
+/* Wide screens: contacts on the left (vertical), copyright on the right */
+@media (min-width: 880px) {
+  .footer-card {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 18px 26px;
+  }
+
+  .footer-contacts {
+    align-items: flex-start; /* left align contact items */
+  }
+
+  .footer p {
+    text-align: right;
+    margin: 0;
+  }
+}
