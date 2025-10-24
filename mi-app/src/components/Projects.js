@@ -1,13 +1,19 @@
 import React, { useEffect } from 'react';
 import './Projects.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faGithub } from '@fortawesome/free-brands-svg-icons';
 
 function ProjectCard({ title, description, link, image }) {
   return (
     <article className="project-card fade-in">
       {image && <img src={image} alt={title} className="project-image" />}
-      <h3>{title}</h3>
-      <p>{description}</p>
-      <a href={link} target="_blank" rel="noreferrer">Ver en GitHub</a>
+      <div className="project-content">
+        <h3 className="project-title">{title}</h3>
+        <p className="project-description">{description}</p>
+        <a href={link} target="_blank" rel="noreferrer" className="github-link">
+          <FontAwesomeIcon icon={faGithub} /> Ver en GitHub
+        </a>
+      </div>
     </article>
   );
 }
@@ -37,7 +43,7 @@ export default function Projects() {
     },
     {
       title: 'Tienda',
-      description: 'Tienda demo de productos — catálogo y carrito de ejemplo.',
+      description: 'Plataforma de comercio electrónico con catálogo de productos y funcionalidad de carrito.',
       link: 'https://github.com/Mich2Dev/tienda',
       image: '/images/startup-landing.svg',
     },

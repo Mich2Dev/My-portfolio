@@ -4,10 +4,8 @@
   align-items: center;
   text-align: center;
   padding: 28px 12px;
-  border-top: none;
-  /* slightly opaque overall footer text */
-  color: rgba(255,255,255,0.85);
-  background: transparent;
+  background: linear-gradient(135deg, #121212, #1e1e1e); /* Darker and more cohesive tone */
+  color: rgba(255, 255, 255, 0.85);
 }
 
 .footer-card {
@@ -16,13 +14,11 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 10px;
-  padding: 18px 20px;
-  background-color: rgba(255,255,255,0.02);
+  gap: 20px;
+  padding: 20px;
+  background-color: rgba(255, 255, 255, 0.08);
   border-radius: 12px;
-  box-shadow: 0 8px 26px rgba(0,0,0,0.42);
-  /* make inner text slightly translucent for a softer look */
-  color: rgba(255,255,255,0.92);
+  box-shadow: 0 8px 26px rgba(0, 0, 0, 0.5);
 }
 
 .footer-inner {
@@ -73,21 +69,28 @@
 /* Labeled contact items */
 .footer-contacts {
   display: flex;
-  flex-direction: column;
-  gap: 10px;
-  flex-wrap: nowrap;
   justify-content: center;
-  align-items: center; /* centered on small screens */
+  gap: 20px;
+  align-items: center;
 }
-
 
 .contact-item {
   display: flex;
-  gap: 8px;
   align-items: center;
-  color: rgba(255,255,255,0.92);
-  font-size: 0.95rem;
-  padding: 4px 6px;
+  gap: 10px;
+  font-size: 1rem;
+  color: rgba(255, 255, 255, 0.92);
+}
+
+.contact-item a {
+  font-size: 1.5rem;
+  color: var(--color-primary);
+  text-decoration: none;
+  transition: transform 0.2s ease;
+}
+
+.contact-item a:hover {
+  transform: scale(1.2);
 }
 
 .contact-label {
@@ -114,15 +117,15 @@
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    padding: 18px 26px;
   }
 
   .footer-contacts {
     align-items: flex-start; /* left align contact items */
   }
 
-  .footer p {
+  .copyright {
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.7);
     text-align: right;
-    margin: 0;
   }
 }

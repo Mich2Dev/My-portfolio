@@ -32,18 +32,85 @@
 .subtitle { color: #cbd5e1; margin: 0 0 8px 0; font-weight: 600; }
 .brief { color: #bfc7d6; margin: 0 0 12px 0; }
 
-.tech-list { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 12px; }
-.tech { background: rgba(59,130,246,0.10); color: var(--color-primary); padding: 6px 8px; border-radius: 999px; font-weight: 600; font-size: 0.85rem; }
+.tech-list {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  margin: 16px 0;
+}
+
+.tech {
+  background: rgba(59,130,246,0.10);
+  color: var(--color-primary);
+  padding: 6px 8px;
+  border-radius: 999px;
+  font-weight: 600;
+  font-size: 0.85rem;
+}
+
+.tech-icon {
+  font-size: 1.5rem;
+  color: var(--color-primary);
+  transition: transform 0.2s ease;
+}
+
+.tech-icon:hover {
+  transform: scale(1.2);
+}
 
 .cta-group { display: flex; gap: 10px; margin-bottom: 10px; }
 
-.socials { display: flex; gap: 12px; font-size: 0.95rem; }
-.socials a { color: #9fb7df; text-decoration: none; }
-.socials a:hover { text-decoration: underline; }
+.socials {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.social-icon {
+  font-size: 1.5rem;
+  color: var(--color-light);
+  transition: transform 0.2s ease;
+}
+
+.social-icon:hover {
+  transform: scale(1.2);
+}
+
+/* Tech and social logos */
+.tech-logo {
+  width: 40px;
+  height: 40px;
+  margin-right: 10px;
+}
+
+.social-logo {
+  width: 30px;
+  height: 30px;
+  margin-right: 10px;
+  transition: transform 0.2s ease;
+}
+
+.social-logo:hover {
+  transform: scale(1.1);
+}
 
 /* Right column (avatar) */
-.hero-right { display: flex; justify-content: center; }
+.hero-right {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 .avatar { width: 120px; height: 120px; border-radius: 12px; overflow: hidden; display: flex; align-items: center; justify-content: center; }
+.profile-image {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: center;
+  border: 3px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
 
 /* Responsive: stack on small screens */
 @media (max-width: 820px) {
