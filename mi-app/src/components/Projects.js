@@ -48,9 +48,9 @@ export default function Projects() {
       image: '/images/startup-landing.svg',
     },
     {
-      title: 'vanti',
+      title: 'Sis Calibración',
       description:
-        'Herramienta para calibración de medidores de gas: extracción de lecturas y comparación con caudal.',
+        'Herramienta para calibración bajo detección de dígitos analógicos.',
       link: 'https://github.com/Mich2Dev/vanti',
       image: '/images/task-manager.svg',
     },
@@ -58,7 +58,7 @@ export default function Projects() {
 
   return (
     <section className="projects container" id="projects">
-      <h2>Proyectos Destacados</h2>
+      <h2>Proyectos & Repositorio</h2>
       <div className="project-list">
         {projects.map((project, index) => (
           <ProjectCard

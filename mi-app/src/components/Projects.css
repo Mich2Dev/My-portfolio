@@ -1,32 +1,27 @@
 .projects {
   padding: 48px 20px;
+  text-align: center;
 }
 
 .projects h2 {
   font-size: 2rem;
-  text-align: center;
   color: var(--color-light);
   margin-bottom: 24px;
 }
 
 .project-list {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 20px;
-  max-width: 1000px; /* keep cards from stretching too wide */
-  margin: 0 auto; /* center the list */
-  align-items: center; /* center cards horizontally */
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 10px;
 }
 
 .project-card {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 12px;
-  width: 100%;
-  padding: 16px;
-  background-color: rgba(255, 255, 255, 0.02);
+  background: rgba(255, 255, 255, 0.05);
   border-radius: 12px;
+  padding: 18px;
   box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4);
   transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
@@ -37,54 +32,15 @@
 }
 
 .project-image {
-  width: 220px; /* fixed width for horizontal card */
-  height: 140px;
+  width: 100%;
+  height: 160px;
   object-fit: cover;
-  border-radius: 8px;
-  flex-shrink: 0;
-}
-
-/* Card content area */
-.project-card > h3,
-.project-card > p,
-.project-card > a {
-  margin: 0;
-}
-
-.project-card > div {
-  /* if later wrapping content in a div, ensure it grows */
-  flex: 1 1 auto;
-}
-
-.project-card h3 {
-  margin: 0 0 8px 0;
-}
-
-/* Responsive: stack card content on narrow screens */
-@media (max-width: 720px) {
-  .project-card {
-    flex-direction: column;
-    align-items: stretch;
-    text-align: left;
-  }
-
-  .project-image {
-    width: 100%;
-    height: 180px;
-    margin-bottom: 12px;
-  }
-
-  .project-list {
-    padding: 0 12px; /* small side padding on narrow screens */
-  }
-}
-
-.project-content {
-  text-align: center;
+  border-radius: 10px;
+  margin-bottom: 12px;
 }
 
 .project-title {
-  font-size: 1.5rem;
+  font-size: 1.4rem;
   margin-bottom: 8px;
 }
 
@@ -92,16 +48,6 @@
   font-size: 1rem;
   color: rgba(255, 255, 255, 0.8);
   margin-bottom: 12px;
-}
-
-.project-card a {
-  color: var(--color-primary);
-  text-decoration: none;
-  font-weight: 600;
-}
-
-.project-card a:hover {
-  text-decoration: underline;
 }
 
 .github-link {
@@ -115,4 +61,12 @@
 
 .github-link:hover {
   text-decoration: underline;
+}
+
+/* Responsive extras */
+@media (max-width: 720px) {
+  .project-list {
+    grid-template-columns: 1fr;
+    padding: 0 12px;
+  }
 }

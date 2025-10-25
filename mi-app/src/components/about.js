@@ -67,7 +67,7 @@ export default function About() {
           <div className="award-card bordered placeholder">
             <FontAwesomeIcon icon={faMedal} className="award-icon gold" />
             <div className="award-content">
-              <h4 className="award-title">2do Lugar</h4>
+              <h4 className="award-title"></h4>
               <p className="award-description">Próximamente...</p>
             </div>
           </div>
