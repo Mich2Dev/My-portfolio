@@ -1,0 +1,155 @@
+/* --- AJUSTE GLOBAL RESPONSIVO --- */
+
+/* Asegura que el layout responda al tamaño de la pantalla */
+html, body {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+}
+
+section, header, footer {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Contenedores principales */
+.container {
+  max-width: 1200px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* Ajustes de texto */
+h1, h2, h3 {
+  word-wrap: break-word;
+  text-align: center;
+}
+
+/* Imágenes fluidas */
+img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 10px;
+}
+
+/* Rejillas y flex de secciones */
+.hero-card,
+.about-grid,
+.project-list,
+.awards-row,
+.footer-card {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+
+/* --- MÓVILES --- */
+@media (max-width: 900px) {
+  .container {
+    padding: 0 16px;
+  }
+
+  /* Header */
+  .hero-card {
+    flex-direction: column;
+    text-align: center;
+    gap: 20px;
+  }
+
+  .hero-left, .hero-right {
+    flex: 1 1 100%;
+    text-align: center;
+  }
+
+  .hero-left h1 {
+    font-size: 1.8rem;
+  }
+
+  /* About */
+  .about-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .skills-carousel-wrapper {
+    width: 100%;
+  }
+
+  /* Projects */
+  .project-list {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .project-card {
+    width: 100%;
+    margin: 0 auto;
+  }
+
+  /* Awards */
+  .awards-row.awards-three {
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .award-card {
+    width: 100%;
+    max-width: 95%;
+  }
+
+  /* Footer */
+  .footer-card {
+    flex-direction: column;
+    text-align: center;
+    gap: 16px;
+  }
+
+  .footer-contacts {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+  }
+
+  .copyright {
+    font-size: 0.85rem;
+  }
+}
+
+/* --- PANTALLAS MUY PEQUEÑAS (480px o menos) --- */
+@media (max-width: 480px) {
+  body {
+    font-size: 0.95rem;
+  }
+
+  h1 { font-size: 1.6rem; }
+  h2 { font-size: 1.3rem; }
+  h3 { font-size: 1.1rem; }
+
+  section, header, footer {
+    padding: 20px 10px;
+  }
+
+  .container {
+    padding: 0 10px;
+  }
+
+  .project-image {
+    height: 140px;
+  }
+
+  .skills-carousel-wrapper {
+    padding: 8px;
+  }
+
+  .award-card {
+    padding: 14px;
+  }
+
+  .footer {
+    padding: 18px 8px;
+  }
+}
