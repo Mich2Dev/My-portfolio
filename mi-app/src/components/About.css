@@ -1,7 +1,8 @@
 .about {
-    padding: 48px 20px;
-    color: var(--color-text);
-    background: transparent;
+    padding-top: 160px !important; /* Asegura la prioridad */
+    padding-left: 10px;
+    padding-right: 10px;
+
 }
 
 .about .container {
@@ -11,8 +12,8 @@
 
 .about-grid {
     display: grid;
-    grid-template-columns: 1fr 360px;
-    gap: 32px;
+    grid-template-columns: 1fr;
+    gap: 2px;
     align-items: start;
 }
 
@@ -183,10 +184,11 @@
     }
 
     .lead, .tease {
-        text-align: center;
-        font-size: 1rem;
-        line-height: 1.65;
-        padding: 0 8px;
+        text-align: center; 
+        /* REDUCCIÓN ADICIONAL PARA MÓVILES */
+        font-size: 0.95rem; /* Un tamaño más seguro para móvil */
+        line-height: 1.5;
+        padding: 0 5px; 
     }
 
     .skills-carousel {
@@ -232,8 +234,8 @@
     .lead, .tease {
         text-align: center; /* SOBREESCRIBE justify */
         font-size: 0.95rem;
-        line-height: 1.5;
-        padding: 0 5px; 
+        line-height: 2;
+        padding: 0 50px; 
     }
 
     /* CORRECCIÓN DE APILAMIENTO: Fuerza 1 columna en móvil */
@@ -255,7 +257,7 @@
     }
 
     .about h2 {
-        font-size: 1.6rem;
+        font-size: 1.5rem;
     }
 
     .about-cta .btn {
