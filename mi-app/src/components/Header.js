@@ -40,7 +40,7 @@ export default function Header() {
               <a href="https://github.com/Mich2Dev" target="_blank" rel="noreferrer" aria-label="GitHub">
                 <FontAwesomeIcon icon={faGithub} className="social-icon" title="GitHub" />
               </a>
-              <a href="https://www.linkedin.com/in/maicol-menco-cuello-9a4248308/" target="_blank" rel="noreferrer" aria-label="LinkedIn">
+              <a href="https://www.linkedin.com/in/michael-menco-cuello-732877226/" target="_blank" rel="noreferrer" aria-label="LinkedIn">
                 <FontAwesomeIcon icon={faLinkedin} className="social-icon" title="LinkedIn" />
               </a>
             </div>
