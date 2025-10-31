@@ -1,293 +1,138 @@
 .about {
-    padding-top: 160px !important; /* Asegura la prioridad */
-    padding-left: 10px;
-    padding-right: 10px;
-
+  padding-top: 160px !important;
+  padding-left: 10px;
+  padding-right: 10px;
 }
 
 .about .container {
-    max-width: 1100px;
-    margin: 0 auto;
+  max-width: 1100px;
+  margin: 0 auto;
 }
 
-.about-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 2px;
-    align-items: start;
-}
-
-/* ---------------- TITULOS Y TEXTOS ---------------- */
 .about h2 {
-    font-size: 2rem;
-    color: var(--color-light);
-    margin-bottom: 14px;
+  font-size: 2rem;
+  color: var(--color-light);
+  margin-bottom: 14px;
+  text-align: center;
 }
 
-.lead {
-    color: rgba(255,255,255,0.92);
-    margin: 0 0 12px 0;
-    font-size: 1.08rem;
-    line-height: 1.75;
-    max-width: 720px;
-    /* Mantenemos justify para escritorio */
-    text-align: justify; 
-    /* Reglas de ruptura para evitar desbordamiento en general */
-    word-break: break-word;
-    overflow-wrap: break-word;
+/* ---------- CINTA GIRATORIA ---------- */
+.skills-carousel-wrapper {
+  position: relative;
+  overflow: hidden;
+  perspective: 1000px;
+  margin: 60px auto;
+  padding: 40px 0; /* <-- más altura interna */
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.04);
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.35);
 }
 
-.tease {
-    color: rgba(255,255,255,0.8);
-    font-style: italic;
-    font-size: 1rem;
-    line-height: 1.6;
-    margin-bottom: 16px;
-    /* Mantenemos justify para escritorio */
-    text-align: justify; 
-    /* Reglas de ruptura para evitar desbordamiento en general */
-    word-break: break-word;
-    overflow-wrap: break-word;
+.skills-carousel {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 36px; /* <-- más separación entre las dos filas */
+  transform-style: preserve-3d;
 }
 
-.about-cta {
-    margin-top: 20px;
+.skills-track {
+  display: flex;
+  gap: 42px;
+  justify-content: center;
+  align-items: center;
+  font-size: clamp(1.8rem, 2vw + 0.6rem, 2.4rem);
+  opacity: 0.9;
 }
 
-.about-cta .btn {
-    padding: 10px 20px;
-    font-weight: 700;
-    font-size: 0.96rem;
-    border-radius: 8px;
+/* Animaciones suaves con profundidad */
+.skills-track.top {
+  animation: float-left 12s ease-in-out infinite, pulse-scale 6s ease-in-out infinite;
+  transform: rotateX(8deg) translateZ(25px);
 }
 
-/* ---------------- ICONOS ---------------- */
+.skills-track.bottom {
+  animation: float-right 12s ease-in-out infinite, pulse-scale 6s ease-in-out infinite;
+  transform: rotateX(-8deg) translateZ(15px);
+}
+
+@keyframes float-left {
+  0%, 100% { transform: translateX(0) rotateX(8deg) translateZ(25px); }
+  50% { transform: translateX(-25%) rotateX(8deg) translateZ(45px); }
+}
+
+@keyframes float-right {
+  0%, 100% { transform: translateX(0) rotateX(-8deg) translateZ(15px); }
+  50% { transform: translateX(25%) rotateX(-8deg) translateZ(35px); }
+}
+
+@keyframes pulse-scale {
+  0%, 100% { scale: 1; opacity: 0.9; }
+  50% { scale: 1.07; opacity: 1; }
+}
+
+/* Brillo que recorre la cinta */
+.skills-carousel-wrapper::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -50%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(120deg, transparent, rgba(255,255,255,0.3), transparent);
+  animation: shimmer 7s linear infinite;
+  transform: skewX(-20deg);
+}
+
+@keyframes shimmer {
+  0% { left: -60%; }
+  100% { left: 160%; }
+}
+
+/* Íconos */
 .skill-icon {
-    font-size: clamp(1.5rem, 2vw + 0.5rem, 2rem);
-    margin-right: clamp(10px, 2vw, 20px);
-    transition: transform 0.3s ease;
+  transition: transform 0.3s ease, filter 0.3s ease;
+  filter: drop-shadow(0 0 8px rgba(255,255,255,0.2));
+}
+.skill-icon:hover {
+  transform: scale(1.35) rotateZ(6deg);
+  filter: drop-shadow(0 0 14px rgba(255,255,255,0.4));
 }
 
+/* Colores por tecnología */
 .skill-icon.react { color: #61dafb; }
 .skill-icon.javascript { color: #f7df1e; }
 .skill-icon.html { color: #e34f26; }
 .skill-icon.css { color: #1572b6; }
 .skill-icon.python { color: #3776ab; }
 .skill-icon.nodejs { color: #68a063; }
+.skill-icon.git { color: #f34f29; }
+.skill-icon.docker { color: #0db7ed; }
+.skill-icon.php { color: #8892bf; }
+.skill-icon.aws { color: #ff9900; }
+.skill-icon.github { color: #fff; }
+.skill-icon.bootstrap { color: #7952b3; }
+.skill-icon.tailwind { color: #38bdf8; }
+.skill-icon.microsoft { color: #00a4ef; }
 
-.skill-icon:hover { transform: scale(1.2); }
-
-/* ---------------- CAROUSEL ---------------- */
-.skills-carousel-wrapper {
-    padding: 10px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 12px;
-    background: rgba(255, 255, 255, 0.05);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-    overflow: hidden;
-}
-
-.skills-carousel {
-    overflow: hidden;
-    position: relative;
-    height: 90px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: rgba(0, 0, 0, 0.2);
-    border-radius: 10px;
-}
-
-.carousel-track {
-    display: flex;
-    animation: scroll 15s linear infinite;
-}
-
-@keyframes scroll {
-    0% { transform: translateX(0); }
-    100% { transform: translateX(-50%); }
-}
-
-/* ---------------- PREMIOS ---------------- */
-.awards-section {
-    max-width: 1100px;
-    margin: 40px auto;
-    padding: 24px 18px;
-    background: rgba(255,255,255,0.04);
-    border-radius: 18px;
-    box-shadow: 0 6px 24px rgba(0,0,0,0.18);
-    border: 2px solid rgba(255,255,255,0.13);
-}
-
-.awards-title {
-    font-size: 1.5rem;
-    color: var(--color-light);
-    margin-bottom: 18px;
-    text-align: center;
-}
-
-.award-icon.gold {
-    color: #FFD700;
-    font-size: 2.2rem;
-    margin-right: 12px;
-    filter: drop-shadow(0 2px 6px #FFD70088);
-}
-
-/* 3 horizontales (diseño de escritorio/tablet grande) */
-.awards-row {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    justify-items: center;
-    gap: 24px;
-}
-
-.award-card.bordered {
-    background: rgba(255,255,255,0.07);
-    border: 2px solid #FFD70044;
-    border-radius: 14px;
-    padding: 18px 22px;
-    box-shadow: 0 2px 12px rgba(0,0,0,0.13);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    transition: 0.3s;
-    text-align: center;
-    min-width: 200px;
-    max-width: 320px;
-}
-
-.award-card.bordered:hover {
-    box-shadow: 0 6px 24px #FFD70033;
-    border-color: #FFD700;
-}
-
-.award-title {
-    font-size: 1.1rem;
-    color: var(--color-light);
-    margin-bottom: 6px;
-}
-
-.award-description {
-    color: #fff;
-    font-size: 0.95rem;
-}
-
-/* ---------------- RESPONSIVE (Hasta 900px) ---------------- */
+/* Responsive */
 @media (max-width: 900px) {
-    .about-grid {
-        grid-template-columns: 1fr;
-        gap: 2px;
-    }
-
-    .about-main {
-        text-align: center;
-    }
-
-    .lead, .tease {
-        text-align: center; 
-        /* REDUCCIÓN ADICIONAL PARA MÓVILES */
-        font-size: 0.95rem; /* Un tamaño más seguro para móvil */
-        line-height: 1.5;
-        padding: 0 5px; 
-    }
-
-    .skills-carousel {
-        height: 80px;
-    }
-
-    .about-side {
-        border: none;
-        background: transparent;
-        padding: 0;
-    }
-
-    .awards-row {
-        grid-template-columns: repeat(3, 1fr);
-        gap: 16px;
-    }
-
-    .award-card.bordered {
-        padding: 10px 10px;
-        font-size: 0.9rem;
-    }
-
-    .award-title {
-        font-size: 0.95rem;
-    }
-
-    .award-description {
-        font-size: 0.8rem;
-    }
+  .skills-track {
+    gap: 26px;
+    font-size: 1.7rem;
+  }
+  .skills-carousel-wrapper {
+    padding: 28px 0;
+  }
 }
 
-/* ---------------- RESPONSIVE (Hasta 600px) ---------------- */
 @media (max-width: 600px) {
-    /* CORRECCIÓN DE SOLAPAMIENTO: Empuja el contenido hacia abajo */
-    .about {
-        padding-top: 160px !important; /* Asegura la prioridad */
-        padding-left: 10px;
-        padding-right: 10px;
-    }
-
-    /* CORRECCIÓN CLAVE PARA EL DESBORDAMIENTO: */
-    /* Quitamos el 'justify' y nos quedamos solo con 'center' y la ruptura de palabra. */
-    .lead, .tease {
-        text-align: center; /* SOBREESCRIBE justify */
-        font-size: 0.95rem;
-        line-height: 2;
-        padding: 0 50px; 
-    }
-
-    /* CORRECCIÓN DE APILAMIENTO: Fuerza 1 columna en móvil */
-    .awards-row {
-        grid-template-columns: 1fr;
-        gap: 16px;
-    }
-
-    .award-card.bordered {
-        max-width: 100%;
-        min-width: unset;
-        padding: 10px;
-        font-size: 0.8rem;
-    }
-
-    .skill-icon {
-        font-size: clamp(1.3rem, 4vw, 1.7rem);
-        margin-right: 12px;
-    }
-
-    .about h2 {
-        font-size: 1.5rem;
-    }
-
-    .about-cta .btn {
-        font-size: 0.9rem;
-        padding: 9px 16px;
-    }
-
-    .awards-section {
-        margin: 28px auto;
-        padding: 18px 12px;
-    }
-
-    .awards-title {
-        font-size: 1.3rem;
-    }
-
-    .award-icon.gold {
-        font-size: 1.6rem;
-    }
-
-    .award-title {
-        font-size: 0.85rem;
-    }
-
-    .award-description {
-        font-size: 0.75rem;
-    }
-}
-
-/* CORRECCIÓN DE ACCESIBILIDAD PARA NAVEGACIÓN (Anchor Links) */
-#about {
-    scroll-margin-top: 160px;
+  .skills-track {
+    gap: 16px;
+    font-size: 1.4rem;
+  }
+  .skills-carousel-wrapper {
+    padding: 20px 0;
+    margin: 30px auto;
+  }
 }
