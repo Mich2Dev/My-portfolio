@@ -1,3 +1,4 @@
+/* =============== SECCIÓN ABOUT =============== */
 .about {
   padding-top: 160px !important;
   padding-left: 10px;
@@ -22,7 +23,7 @@
   overflow: hidden;
   perspective: 1000px;
   margin: 60px auto;
-  padding: 40px 0; /* <-- más altura interna */
+  padding: 40px 0;
   border-radius: 18px;
   background: rgba(255, 255, 255, 0.04);
   box-shadow: 0 8px 28px rgba(0, 0, 0, 0.35);
@@ -32,7 +33,7 @@
   position: relative;
   display: flex;
   flex-direction: column;
-  gap: 36px; /* <-- más separación entre las dos filas */
+  gap: 36px;
   transform-style: preserve-3d;
 }
 
@@ -45,7 +46,6 @@
   opacity: 0.9;
 }
 
-/* Animaciones suaves con profundidad */
 .skills-track.top {
   animation: float-left 12s ease-in-out infinite, pulse-scale 6s ease-in-out infinite;
   transform: rotateX(8deg) translateZ(25px);
@@ -99,7 +99,7 @@
   filter: drop-shadow(0 0 14px rgba(255,255,255,0.4));
 }
 
-/* Colores por tecnología */
+/* Colores */
 .skill-icon.react { color: #61dafb; }
 .skill-icon.javascript { color: #f7df1e; }
 .skill-icon.html { color: #e34f26; }
@@ -134,5 +134,114 @@
   .skills-carousel-wrapper {
     padding: 20px 0;
     margin: 30px auto;
+  }
+}
+
+/* ---------- TARJETAS DE PREMIOS DORADAS RESTAURADAS ---------- */
+.awards-section {
+  max-width: 1100px;
+  margin: 40px auto;
+  padding: 24px 18px;
+  background: rgba(255,255,255,0.04);
+  border-radius: 18px;
+  box-shadow: 0 6px 24px rgba(0,0,0,0.18);
+  border: 2px solid rgba(255,255,255,0.13);
+}
+
+.awards-title {
+  font-size: 1.5rem;
+  color: var(--color-light);
+  margin-bottom: 18px;
+  text-align: center;
+}
+
+.award-icon.gold {
+  color: #FFD700;
+  font-size: 2.2rem;
+  margin-right: 12px;
+  filter: drop-shadow(0 2px 6px #FFD70088);
+}
+
+.awards-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  justify-items: center;
+  gap: 24px;
+}
+
+.award-card.bordered {
+  background: rgba(255,255,255,0.07);
+  border: 2px solid #FFD70044;
+  border-radius: 14px;
+  padding: 18px 22px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.13);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: 0.3s;
+  text-align: center;
+  min-width: 200px;
+  max-width: 320px;
+}
+
+.award-card.bordered:hover {
+  box-shadow: 0 6px 24px #FFD70033;
+  border-color: #FFD700;
+}
+
+.award-title {
+  font-size: 1.1rem;
+  color: var(--color-light);
+  margin-bottom: 6px;
+}
+
+.award-description {
+  color: #fff;
+  font-size: 0.95rem;
+}
+
+/* Responsive premios */
+@media (max-width: 900px) {
+  .awards-row {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+
+  .award-card.bordered {
+    padding: 10px 10px;
+    font-size: 0.9rem;
+  }
+
+  .award-title {
+    font-size: 0.95rem;
+  }
+
+  .award-description {
+    font-size: 0.8rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .awards-row {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .award-card.bordered {
+    max-width: 100%;
+    padding: 10px;
+    font-size: 0.8rem;
+  }
+
+  .award-title {
+    font-size: 0.85rem;
+  }
+
+  .award-description {
+    font-size: 0.75rem;
+  }
+
+  .award-icon.gold {
+    font-size: 1.6rem;
   }
 }
