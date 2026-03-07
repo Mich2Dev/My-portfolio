@@ -1,0 +1,1047 @@
+.ai-bot {
+    position: fixed;
+    z-index: 1000;
+    opacity: 0;
+    transform: scale(0.5);
+    transition: opacity 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55),
+                transform 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.ai-bot.visible {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.bot-container {
+    position: relative;
+    width: 85px;
+    height: 85px;
+}
+
+/* Círculo principal del bot - más expresivo y profesional */
+.bot-circle {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 85px;
+    height: 85px;
+    background: linear-gradient(135deg, 
+                rgba(79, 70, 229, 0.98), 
+                rgba(139, 92, 246, 0.98),
+                rgba(168, 85, 247, 0.98));
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 10px 40px rgba(79, 70, 229, 0.7),
+                0 0 60px rgba(139, 92, 246, 0.4),
+                inset 0 -4px 12px rgba(0, 0, 0, 0.4),
+                inset 0 4px 12px rgba(255, 255, 255, 0.25);
+    animation: float 3s ease-in-out infinite;
+    cursor: pointer;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    border: 3px solid rgba(255, 255, 255, 0.4);
+    position: relative;
+    overflow: visible;
+}
+
+/* Brillo superior del bot */
+.bot-circle::after {
+    content: "";
+    position: absolute;
+    top: 10%;
+    left: 20%;
+    width: 50%;
+    height: 30%;
+    background: radial-gradient(ellipse at center, 
+                rgba(255, 255, 255, 0.4) 0%, 
+                transparent 70%);
+    border-radius: 50%;
+    z-index: 1;
+    pointer-events: none;
+}
+
+.bot-circle:hover {
+    transform: translate(-50%, -50%) scale(1.18) rotate(8deg);
+    box-shadow: 0 15px 60px rgba(79, 70, 229, 0.9),
+                0 0 80px rgba(139, 92, 246, 0.6),
+                inset 0 -4px 12px rgba(0, 0, 0, 0.4),
+                inset 0 4px 12px rgba(255, 255, 255, 0.35);
+    border-color: rgba(255, 255, 255, 0.6);
+    filter: brightness(1.15);
+}
+
+/* Cara del bot con expresiones */
+.bot-face {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 3;
+}
+
+/* Ojos del bot */
+.bot-eyes {
+    display: flex;
+    gap: 18px;
+    margin-bottom: 8px;
+    animation: blink 5s infinite;
+}
+
+.bot-eye {
+    width: 12px;
+    height: 12px;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 50%;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+    transition: all 0.3s ease;
+}
+
+/* Boca del bot */
+.bot-mouth {
+    width: 30px;
+    height: 15px;
+    border: 3px solid rgba(255, 255, 255, 0.9);
+    border-top: none;
+    border-radius: 0 0 15px 15px;
+    transition: all 0.3s ease;
+}
+
+/* Expresión: Feliz (default) */
+.bot-face.happy .bot-mouth {
+    border-radius: 0 0 20px 20px;
+    width: 32px;
+}
+
+/* Expresión: Hablando */
+.bot-face.talking .bot-mouth {
+    animation: talking 0.5s ease-in-out infinite;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    border: 3px solid rgba(255, 255, 255, 0.9);
+}
+
+.bot-face.talking .bot-eye {
+    animation: eyeMove 2s ease-in-out infinite;
+}
+
+/* Expresión: Pensando */
+.bot-face.thinking .bot-eye {
+    transform: translateX(-3px);
+}
+
+.bot-face.thinking .bot-mouth {
+    width: 20px;
+    height: 8px;
+    border-radius: 0 0 10px 10px;
+}
+
+/* Expresión: Emocionado */
+.bot-face.excited .bot-eye {
+    width: 14px;
+    height: 14px;
+    animation: excited-eyes 0.5s ease-in-out infinite;
+}
+
+.bot-face.excited .bot-mouth {
+    width: 35px;
+    height: 18px;
+    border-radius: 0 0 25px 25px;
+}
+
+/* Expresión: Sorprendido */
+.bot-face.surprised .bot-eye {
+    width: 16px;
+    height: 16px;
+    animation: surprised-eyes 0.3s ease-in-out;
+}
+
+.bot-face.surprised .bot-mouth {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 3px solid rgba(255, 255, 255, 0.9);
+}
+
+@keyframes blink {
+    0%, 92%, 100% {
+        transform: scaleY(1);
+    }
+    94%, 96% {
+        transform: scaleY(0.1);
+    }
+}
+
+@keyframes talking {
+    0%, 100% {
+        transform: scaleY(1);
+    }
+    50% {
+        transform: scaleY(0.6);
+    }
+}
+
+@keyframes eyeMove {
+    0%, 100% {
+        transform: translateX(0);
+    }
+    25% {
+        transform: translateX(2px);
+    }
+    75% {
+        transform: translateX(-2px);
+    }
+}
+
+@keyframes excited-eyes {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.2);
+    }
+}
+
+@keyframes surprised-eyes {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.3);
+    }
+    100% {
+        transform: scale(1.1);
+    }
+}
+
+/* ========== ANIMACIONES DEL BOT ========== */
+
+/* Animación: Giro completo */
+.bot-circle.spin {
+    animation: spin-animation 0.6s ease-in-out !important;
+}
+
+@keyframes spin-animation {
+    0% {
+        transform: translate(-50%, -50%) rotate(0deg) scale(1);
+    }
+    50% {
+        transform: translate(-50%, -50%) rotate(180deg) scale(1.2);
+    }
+    100% {
+        transform: translate(-50%, -50%) rotate(360deg) scale(1);
+    }
+}
+
+/* Animación: Rebote */
+.bot-circle.bounce {
+    animation: bounce-animation 0.5s ease-in-out !important;
+}
+
+@keyframes bounce-animation {
+    0%, 100% {
+        transform: translate(-50%, -50%) translateY(0);
+    }
+    25% {
+        transform: translate(-50%, -50%) translateY(-20px);
+    }
+    50% {
+        transform: translate(-50%, -50%) translateY(0);
+    }
+    75% {
+        transform: translate(-50%, -50%) translateY(-10px);
+    }
+}
+
+/* Animación: Sacudida */
+.bot-circle.shake {
+    animation: shake-animation 0.5s ease-in-out !important;
+}
+
+@keyframes shake-animation {
+    0%, 100% {
+        transform: translate(-50%, -50%) rotate(0deg);
+    }
+    10%, 30%, 50%, 70%, 90% {
+        transform: translate(-50%, -50%) rotate(-10deg);
+    }
+    20%, 40%, 60%, 80% {
+        transform: translate(-50%, -50%) rotate(10deg);
+    }
+}
+
+/* Animación: Meneo */
+.bot-circle.wiggle {
+    animation: wiggle-animation 0.6s ease-in-out !important;
+}
+
+@keyframes wiggle-animation {
+    0%, 100% {
+        transform: translate(-50%, -50%) rotate(0deg);
+    }
+    15% {
+        transform: translate(-50%, -50%) rotate(-15deg) scale(1.1);
+    }
+    30% {
+        transform: translate(-50%, -50%) rotate(15deg) scale(1.1);
+    }
+    45% {
+        transform: translate(-50%, -50%) rotate(-15deg) scale(1.1);
+    }
+    60% {
+        transform: translate(-50%, -50%) rotate(15deg) scale(1.1);
+    }
+    75% {
+        transform: translate(-50%, -50%) rotate(-5deg);
+    }
+}
+
+/* Animación: Salto */
+.bot-circle.jump {
+    animation: jump-animation 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55) !important;
+}
+
+@keyframes jump-animation {
+    0%, 100% {
+        transform: translate(-50%, -50%) translateY(0) rotate(0deg);
+    }
+    20% {
+        transform: translate(-50%, -50%) translateY(-30px) rotate(-10deg) scale(1.1);
+    }
+    40% {
+        transform: translate(-50%, -50%) translateY(-40px) rotate(10deg) scale(1.15);
+    }
+    60% {
+        transform: translate(-50%, -50%) translateY(-30px) rotate(-5deg) scale(1.1);
+    }
+    80% {
+        transform: translate(-50%, -50%) translateY(-10px) rotate(5deg) scale(1.05);
+    }
+}
+
+/* Animación: Danza */
+.bot-circle.dance {
+    animation: dance-animation 1s ease-in-out !important;
+}
+
+@keyframes dance-animation {
+    0%, 100% {
+        transform: translate(-50%, -50%) rotate(0deg) scale(1);
+    }
+    10% {
+        transform: translate(-50%, -50%) rotate(-15deg) scale(1.1) translateX(-10px);
+    }
+    20% {
+        transform: translate(-50%, -50%) rotate(15deg) scale(1.1) translateX(10px);
+    }
+    30% {
+        transform: translate(-50%, -50%) rotate(-15deg) scale(1.1) translateX(-10px);
+    }
+    40% {
+        transform: translate(-50%, -50%) rotate(15deg) scale(1.1) translateX(10px);
+    }
+    50% {
+        transform: translate(-50%, -50%) rotate(-10deg) scale(1.05) translateX(-5px);
+    }
+    60% {
+        transform: translate(-50%, -50%) rotate(10deg) scale(1.05) translateX(5px);
+    }
+    70% {
+        transform: translate(-50%, -50%) rotate(-5deg) scale(1.02) translateX(-2px);
+    }
+    80% {
+        transform: translate(-50%, -50%) rotate(5deg) scale(1.02) translateX(2px);
+    }
+    90% {
+        transform: translate(-50%, -50%) rotate(-2deg) scale(1.01);
+    }
+}
+
+/* Animación: Pulso fuerte */
+.bot-circle.pulse-strong {
+    animation: pulse-strong-animation 0.6s ease-in-out !important;
+}
+
+@keyframes pulse-strong-animation {
+    0%, 100% {
+        transform: translate(-50%, -50%) scale(1);
+    }
+    25% {
+        transform: translate(-50%, -50%) scale(1.3);
+    }
+    50% {
+        transform: translate(-50%, -50%) scale(0.9);
+    }
+    75% {
+        transform: translate(-50%, -50%) scale(1.2);
+    }
+}
+
+/* ========== PARTÍCULAS DE BRILLO ========== */
+.sparkle {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 10px;
+    height: 10px;
+    background: radial-gradient(circle, 
+                var(--sparkle-color, #ffd700) 0%, 
+                rgba(255, 215, 0, 0.6) 50%, 
+                transparent 100%);
+    border-radius: 50%;
+    animation: sparkle-burst 1s ease-out forwards;
+    pointer-events: none;
+    box-shadow: 0 0 15px var(--sparkle-color, #ffd700),
+                0 0 30px var(--sparkle-color, rgba(255, 215, 0, 0.4));
+}
+
+@keyframes sparkle-burst {
+    0% {
+        transform: translate(-50%, -50%) rotate(var(--angle)) translateX(0) scale(1);
+        opacity: 1;
+    }
+    100% {
+        transform: translate(-50%, -50%) rotate(var(--angle)) translateX(100px) scale(0);
+        opacity: 0;
+    }
+}
+
+/* ========== BOT MENSAJERO (DELIVERY BOT) ========== */
+.delivery-bot {
+    position: absolute;
+    top: 50%;
+    left: -150px;
+    transform: translateY(-50%);
+    animation: delivery-enter 2.5s ease-out forwards;
+    z-index: 10;
+}
+
+@keyframes delivery-enter {
+    0% {
+        left: -150px;
+        opacity: 0;
+        transform: translateY(-50%) scale(0.8);
+    }
+    40% {
+        opacity: 1;
+        transform: translateY(-50%) scale(1);
+    }
+    70% {
+        left: -80px;
+    }
+    85% {
+        left: -70px;
+    }
+    100% {
+        left: -75px;
+        transform: translateY(-50%) scale(1);
+    }
+}
+
+.delivery-bot-circle {
+    width: 70px;
+    height: 70px;
+    background: linear-gradient(135deg, 
+                rgba(34, 197, 94, 0.98), 
+                rgba(16, 185, 129, 0.98));
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 8px 30px rgba(34, 197, 94, 0.6),
+                0 0 50px rgba(16, 185, 129, 0.3),
+                inset 0 -3px 10px rgba(0, 0, 0, 0.3),
+                inset 0 3px 10px rgba(255, 255, 255, 0.2);
+    border: 3px solid rgba(255, 255, 255, 0.4);
+    position: relative;
+    animation: delivery-bounce 0.6s ease-in-out infinite;
+}
+
+@keyframes delivery-bounce {
+    0%, 100% {
+        transform: translateY(0) rotate(-5deg);
+    }
+    50% {
+        transform: translateY(-10px) rotate(5deg);
+    }
+}
+
+/* Paquete de CV en manos del bot mensajero */
+.cv-package {
+    position: absolute;
+    bottom: -18px;
+    right: -18px;
+    width: 38px;
+    height: 38px;
+    background: linear-gradient(135deg, 
+                rgba(239, 68, 68, 0.98), 
+                rgba(220, 38, 38, 0.98));
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 6px 20px rgba(239, 68, 68, 0.7),
+                0 0 30px rgba(239, 68, 68, 0.4);
+    animation: cv-wiggle 0.4s ease-in-out infinite;
+    border: 2px solid rgba(255, 255, 255, 0.6);
+}
+
+.cv-package svg {
+    font-size: 1.3rem;
+    color: white;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+}
+
+@keyframes cv-wiggle {
+    0%, 100% {
+        transform: rotate(-8deg) scale(1);
+    }
+    50% {
+        transform: rotate(8deg) scale(1.05);
+    }
+}
+
+/* CV flotante después de la entrega */
+.cv-floating {
+    position: absolute;
+    top: -90px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    animation: cv-float-in 1.2s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
+    z-index: 5;
+}
+
+@keyframes cv-float-in {
+    0% {
+        opacity: 0;
+        transform: translateX(-150%) translateY(20px) scale(0.3) rotate(-45deg);
+    }
+    60% {
+        transform: translateX(-50%) translateY(-8px) scale(1.15) rotate(5deg);
+    }
+    80% {
+        transform: translateX(-50%) translateY(2px) scale(0.95) rotate(-2deg);
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0) scale(1) rotate(0deg);
+    }
+}
+
+.cv-floating svg {
+    font-size: 2.8rem;
+    color: rgba(239, 68, 68, 0.98);
+    filter: drop-shadow(0 6px 16px rgba(239, 68, 68, 0.6));
+    animation: cv-pulse 1.8s ease-in-out infinite;
+}
+
+@keyframes cv-pulse {
+    0%, 100% {
+        transform: scale(1) rotate(0deg);
+    }
+    25% {
+        transform: scale(1.12) rotate(-5deg);
+    }
+    75% {
+        transform: scale(1.12) rotate(5deg);
+    }
+}
+
+.cv-label {
+    background: linear-gradient(135deg, 
+                rgba(79, 70, 229, 0.98), 
+                rgba(139, 92, 246, 0.98));
+    color: white;
+    padding: 10px 18px;
+    border-radius: 14px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    box-shadow: 0 6px 20px rgba(79, 70, 229, 0.5),
+                0 0 30px rgba(139, 92, 246, 0.3);
+    white-space: nowrap;
+    animation: label-bounce 0.6s ease-out 0.6s backwards;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+}
+
+@keyframes label-bounce {
+    0% {
+        opacity: 0;
+        transform: translateY(-15px) scale(0.8);
+    }
+    60% {
+        transform: translateY(4px) scale(1.05);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+@keyframes float {
+    0%, 100% {
+        transform: translate(-50%, -50%) translateY(0px);
+    }
+    50% {
+        transform: translate(-50%, -50%) translateY(-10px);
+    }
+}
+
+/* Icono del bot de fondo - sutil */
+.bot-icon-bg {
+    position: absolute;
+    font-size: 2rem;
+    color: rgba(255, 255, 255, 0.15);
+    z-index: 2;
+    animation: iconRotate 20s linear infinite;
+    pointer-events: none;
+}
+
+@keyframes iconRotate {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/* Anillos de pulso - más visibles */
+.pulse-ring {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 85px;
+    height: 85px;
+    border: 3px solid rgba(79, 70, 229, 0.7);
+    border-radius: 50%;
+    animation: pulse 2.5s ease-out infinite;
+}
+
+.pulse-ring.delay-1 {
+    animation-delay: 0.6s;
+    border-color: rgba(139, 92, 246, 0.6);
+}
+
+.pulse-ring.delay-2 {
+    animation-delay: 1.2s;
+    border-color: rgba(168, 85, 247, 0.5);
+}
+
+@keyframes pulse {
+    0% {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 1;
+    }
+    100% {
+        transform: translate(-50%, -50%) scale(2);
+        opacity: 0;
+    }
+}
+
+/* Partículas orbitando - más visibles */
+.orbit-particle {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 50%;
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.9),
+                0 0 25px rgba(139, 92, 246, 0.6);
+}
+
+.particle-1 {
+    top: 10%;
+    left: 50%;
+    animation: orbit 4s linear infinite;
+}
+
+.particle-2 {
+    top: 50%;
+    left: 10%;
+    animation: orbit 4s linear infinite;
+    animation-delay: 1.3s;
+}
+
+.particle-3 {
+    top: 50%;
+    right: 10%;
+    animation: orbit 4s linear infinite;
+    animation-delay: 2.6s;
+}
+
+@keyframes orbit {
+    0% {
+        transform: rotate(0deg) translateX(50px) rotate(0deg);
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.6;
+    }
+    100% {
+        transform: rotate(360deg) translateX(50px) rotate(-360deg);
+        opacity: 1;
+    }
+}
+
+/* Mensaje flotante - más fluido y natural */
+.bot-message {
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-10px);
+    background: linear-gradient(135deg, 
+                rgba(79, 70, 229, 0.96), 
+                rgba(139, 92, 246, 0.96));
+    color: white;
+    padding: 14px 22px;
+    border-radius: 18px;
+    white-space: normal;
+    font-size: 0.95rem;
+    font-weight: 500;
+    box-shadow: 0 8px 24px rgba(79, 70, 229, 0.5),
+                0 0 30px rgba(139, 92, 246, 0.2);
+    animation: messageAppear 0.5s ease-out;
+    margin-bottom: 12px;
+    max-width: 280px;
+    text-align: left;
+    line-height: 1.6;
+    letter-spacing: 0.2px;
+    backdrop-filter: blur(12px);
+    border: none;
+}
+
+.bot-message::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 18px;
+    padding: 1px;
+    background: linear-gradient(135deg, 
+                rgba(255, 255, 255, 0.3), 
+                rgba(255, 255, 255, 0.1));
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, 
+                  linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+}
+
+.bot-message::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 0;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-top: 10px solid rgba(139, 92, 246, 0.96);
+    filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.15));
+}
+
+@keyframes messageAppear {
+    0% {
+        opacity: 0;
+        transform: translateX(-50%) translateY(10px) scale(0.9);
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(-50%) translateY(-10px) scale(1);
+    }
+}
+
+/* Cursor de escritura */
+.typing-cursor {
+    display: inline-block;
+    margin-left: 2px;
+    animation: blink 0.8s infinite;
+    font-weight: 300;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+@keyframes blink {
+    0%, 49% {
+        opacity: 1;
+    }
+    50%, 100% {
+        opacity: 0;
+    }
+}
+
+/* Herramientas tipo Mickey Mouse - mejoradas y siempre visibles */
+.bot-tools {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1001;
+    pointer-events: none;
+}
+
+.tool-item {
+    position: absolute;
+    width: 55px;
+    height: 55px;
+    background: linear-gradient(135deg, 
+                rgba(79, 70, 229, 0.98), 
+                rgba(139, 92, 246, 0.98),
+                rgba(168, 85, 247, 0.98));
+    border-radius: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 6px 20px rgba(79, 70, 229, 0.6),
+                0 0 30px rgba(139, 92, 246, 0.3),
+                inset 0 2px 0 rgba(255, 255, 255, 0.3),
+                inset 0 -2px 0 rgba(0, 0, 0, 0.2);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    animation: toolAppear 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
+    opacity: 0;
+    animation-delay: calc(var(--tool-index) * 0.12s);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    pointer-events: auto;
+    z-index: 1002;
+}
+
+.tool-item:hover {
+    transform: scale(1.3) rotate(15deg) !important;
+    box-shadow: 0 10px 35px rgba(79, 70, 229, 0.9),
+                0 0 60px rgba(139, 92, 246, 0.6) !important;
+    border-color: rgba(255, 255, 255, 0.6);
+    filter: brightness(1.3);
+    z-index: 1003 !important;
+    opacity: 1 !important;
+}
+
+.tool-item:active {
+    transform: scale(1.1) rotate(0deg) !important;
+    z-index: 1003 !important;
+    opacity: 1 !important;
+}
+
+.tool-item svg {
+    font-size: 1.4rem;
+    color: white;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+    pointer-events: none;
+}
+
+.tool-item:hover svg {
+    transform: scale(1.2) rotate(-15deg);
+}
+
+.tool-label {
+    position: absolute;
+    bottom: -30px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: linear-gradient(135deg, rgba(0, 0, 0, 0.95), rgba(30, 30, 30, 0.95));
+    color: white;
+    padding: 6px 12px;
+    border-radius: 8px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease, bottom 0.3s ease;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    z-index: 1004;
+}
+
+.tool-item:hover .tool-label {
+    opacity: 1 !important;
+    bottom: -35px;
+}
+
+/* Indicador de clic para el bot */
+.click-indicator {
+    margin-top: 8px;
+    padding: 6px 12px;
+    background: rgba(255, 215, 0, 0.95);
+    color: #000;
+    border-radius: 8px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    animation: click-pulse 1s ease-in-out infinite;
+    box-shadow: 0 4px 12px rgba(255, 215, 0, 0.5);
+}
+
+@keyframes click-pulse {
+    0%, 100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+    50% {
+        transform: scale(1.1);
+        opacity: 0.8;
+    }
+}
+
+/* Bot sin activar - más llamativo */
+.ai-bot:not(.active) .bot-circle {
+    animation: float 3s ease-in-out infinite, attention-pulse 2s ease-in-out infinite;
+}
+
+@keyframes attention-pulse {
+    0%, 100% {
+        box-shadow: 0 10px 40px rgba(79, 70, 229, 0.7),
+                    0 0 60px rgba(139, 92, 246, 0.4);
+    }
+    50% {
+        box-shadow: 0 15px 50px rgba(79, 70, 229, 0.9),
+                    0 0 80px rgba(139, 92, 246, 0.6),
+                    0 0 100px rgba(255, 215, 0, 0.3);
+    }
+}
+
+/* Posiciones de las herramientas en círculo perfecto alrededor del bot */
+/* Radio de 110px desde el centro del bot */
+
+/* Herramienta 1 - Arriba (0°) */
+.tool-item:nth-child(1) {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) translate(0, -110px);
+}
+
+/* Herramienta 2 - Derecha arriba (72°) */
+.tool-item:nth-child(2) {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) translate(104px, -34px);
+}
+
+/* Herramienta 3 - Derecha abajo (144°) */
+.tool-item:nth-child(3) {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) translate(64px, 89px);
+}
+
+/* Herramienta 4 - Izquierda abajo (216°) */
+.tool-item:nth-child(4) {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) translate(-64px, 89px);
+}
+
+/* Herramienta 5 - Izquierda arriba (288°) */
+.tool-item:nth-child(5) {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) translate(-104px, -34px);
+}
+
+@keyframes toolAppear {
+    0% {
+        opacity: 0;
+        transform: scale(0) rotate(-180deg);
+    }
+    60% {
+        transform: scale(1.1) rotate(10deg);
+        opacity: 1;
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1) rotate(0deg);
+    }
+}
+
+/* Responsive - ajustado para el nuevo tamaño */
+@media (max-width: 1024px) {
+    .ai-bot {
+        /* En tablets y móviles, posiciones más centradas */
+        left: 50% !important;
+        bottom: 80px !important;
+    }
+}
+
+@media (max-width: 768px) {
+    .bot-container {
+        width: 70px;
+        height: 70px;
+    }
+
+    .bot-circle {
+        width: 70px;
+        height: 70px;
+    }
+
+    .bot-icon {
+        font-size: 2.2rem;
+    }
+
+    .bot-message {
+        font-size: 0.85rem;
+        padding: 12px 18px;
+        max-width: 240px;
+    }
+
+    .pulse-ring {
+        width: 70px;
+        height: 70px;
+    }
+
+    .tool-item {
+        width: 48px;
+        height: 48px;
+    }
+
+    .tool-item svg {
+        font-size: 1.2rem;
+    }
+
+    /* Ajustar posiciones de herramientas en móvil - círculo perfecto más pequeño */
+    /* Radio de 90px desde el centro del bot */
+    
+    /* Herramienta 1 - Arriba (0°) */
+    .tool-item:nth-child(1) {
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%) translate(0, -90px);
+    }
+
+    /* Herramienta 2 - Derecha arriba (72°) */
+    .tool-item:nth-child(2) {
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%) translate(85px, -28px);
+    }
+
+    /* Herramienta 3 - Derecha abajo (144°) */
+    .tool-item:nth-child(3) {
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%) translate(53px, 73px);
+    }
+
+    /* Herramienta 4 - Izquierda abajo (216°) */
+    .tool-item:nth-child(4) {
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%) translate(-53px, 73px);
+    }
+
+    /* Herramienta 5 - Izquierda arriba (288°) */
+    .tool-item:nth-child(5) {
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%) translate(-85px, -28px);
+    }
+}

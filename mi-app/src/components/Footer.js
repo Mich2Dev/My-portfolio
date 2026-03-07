@@ -28,7 +28,7 @@ export default function Footer() {
           <a href="https://www.linkedin.com/in/maicol-menco-cuello-9a4248308/" target="_blank" rel="noreferrer" aria-label="LinkedIn">
             <FontAwesomeIcon icon={faLinkedin} />
           </a>
-          <a href="https://wa.me/573022289180" target="_blank" rel="noreferrer" aria-label="WhatsApp">
+          <a href="https://wa.me/573013137911" target="_blank" rel="noreferrer" aria-label="WhatsApp">
             <FontAwesomeIcon icon={faWhatsapp} />
           </a>
         </div>

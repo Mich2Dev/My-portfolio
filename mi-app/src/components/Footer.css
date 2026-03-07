@@ -3,24 +3,40 @@
   justify-content: center;
   align-items: center;
   text-align: center;
-  padding: 28px 12px;
-  background: linear-gradient(135deg, #121212, #1e1e1e);
-  color: rgba(255, 255, 255, 0.85);
+  padding: 60px 20px;
+  background: linear-gradient(135deg, #000000 0%, #0a0a0f 100%);
+  color: rgba(229, 231, 235, 0.9);
+  position: relative;
+  overflow: hidden;
+}
+
+.footer::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(79, 70, 229, 0.5), transparent);
+  box-shadow: 0 0 20px rgba(79, 70, 229, 0.3);
 }
 
 .footer-card {
-  max-width: 1100px;
+  max-width: 1200px;
   width: 100%;
   display: flex;
-  flex-direction: row;
-  justify-content: space-between;
+  flex-direction: column;
+  justify-content: center;
   align-items: center;
-  flex-wrap: wrap;
-  gap: 20px;
-  padding: 20px 28px;
-  background-color: rgba(255, 255, 255, 0.08);
-  border-radius: 12px;
-  box-shadow: 0 8px 26px rgba(0, 0, 0, 0.5);
+  gap: 30px;
+  padding: 40px;
+  background: rgba(15, 15, 20, 0.4);
+  backdrop-filter: blur(20px);
+  border-radius: 24px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
+  border: 1px solid rgba(79, 70, 229, 0.2);
+  position: relative;
+  z-index: 1;
 }
 
 /* Íconos de contacto */
@@ -28,98 +44,128 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 22px;
+  gap: 24px;
   flex-wrap: wrap;
 }
 
-.contact-item a {
-  font-size: 1.6rem;
-  color: var(--color-primary);
+.footer-contacts a {
+  font-size: 2rem;
+  color: rgba(229, 231, 235, 0.6);
   text-decoration: none;
-  transition: transform 0.25s ease, color 0.25s ease;
-}
-
-.contact-item a:hover {
-  transform: scale(1.2);
-  color: #66aaff;
-}
-
-.copyright {
-  font-size: 0.95rem;
-  color: rgba(255, 255, 255, 0.75);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  padding: 16px;
+  background: rgba(79, 70, 229, 0.05);
+  border-radius: 16px;
+  border: 1px solid rgba(79, 70, 229, 0.2);
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 6px;
+}
+
+.footer-contacts a:hover {
+  transform: translateY(-6px) scale(1.1);
+  background: rgba(79, 70, 229, 0.1);
+  border-color: currentColor;
+  box-shadow: 0 8px 24px rgba(79, 70, 229, 0.3);
+}
+
+.footer-contacts a[aria-label="Correo"]:hover {
+  color: #ea4335;
+  box-shadow: 0 8px 24px rgba(234, 67, 53, 0.3);
+}
+
+.footer-contacts a[aria-label="GitHub"]:hover {
+  color: #fff;
+  box-shadow: 0 8px 24px rgba(255, 255, 255, 0.2);
+}
+
+.footer-contacts a[aria-label="LinkedIn"]:hover {
+  color: #0077b5;
+  box-shadow: 0 8px 24px rgba(0, 119, 181, 0.3);
+}
+
+.footer-contacts a[aria-label="WhatsApp"]:hover {
+  color: #25d366;
+  box-shadow: 0 8px 24px rgba(37, 211, 102, 0.3);
+}
+
+.copyright {
+  font-size: 1rem;
+  color: rgba(156, 163, 175, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-weight: 500;
+  letter-spacing: 0.5px;
 }
 
 /* -------------------- RESPONSIVE -------------------- */
-
-/* Tablets y pantallas medianas */
 @media (max-width: 900px) {
+  .footer {
+    padding: 50px 16px;
+  }
+
   .footer-card {
-    max-width: 95%;
-    padding: 20px;
-    flex-direction: column;
-    text-align: center;
-    gap: 16px;
+    padding: 32px 24px;
+    gap: 24px;
   }
 
   .footer-contacts {
-    justify-content: center;
-    gap: 18px;
+    gap: 20px;
   }
 
-  .contact-item a {
-    font-size: 1.5rem;
+  .footer-contacts a {
+    font-size: 1.8rem;
+    padding: 14px;
+  }
+
+  .copyright {
+    font-size: 0.95rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .footer {
+    padding: 40px 12px;
+  }
+
+  .footer-card {
+    padding: 24px 16px;
+    gap: 20px;
+  }
+
+  .footer-contacts {
+    gap: 16px;
+  }
+
+  .footer-contacts a {
+    font-size: 1.6rem;
+    padding: 12px;
   }
 
   .copyright {
     font-size: 0.9rem;
+    flex-direction: column;
+    line-height: 1.6;
   }
 }
 
-/* Pantallas pequeñas (celulares) */
-@media (max-width: 600px) {
-  .footer {
-    padding: 20px 10px;
-  }
-
+@media (max-width: 400px) {
   .footer-card {
-    gap: 14px;
-    padding: 16px;
+    padding: 20px 12px;
   }
 
   .footer-contacts {
-    gap: 14px;
+    gap: 12px;
   }
 
-  .contact-item a {
+  .footer-contacts a {
     font-size: 1.4rem;
+    padding: 10px;
   }
 
   .copyright {
     font-size: 0.85rem;
-    flex-direction: column;
-    line-height: 1.4;
-  }
-}
-
-/* Pantallas muy pequeñas (menores de 400px) */
-@media (max-width: 400px) {
-  .footer-card {
-    padding: 14px 10px;
-  }
-
-  .footer-contacts {
-    gap: 10px;
-  }
-
-  .contact-item a {
-    font-size: 1.3rem;
-  }
-
-  .copyright {
-    font-size: 0.8rem;
   }
 }

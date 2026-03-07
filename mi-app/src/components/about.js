@@ -1,5 +1,6 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import './About.css';
+import { useScrollAnimation } from '../hooks/useScrollAnimation';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faReact,
@@ -31,76 +32,195 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 
 export default function About() {
+  const [typedLead, setTypedLead] = useState('');
+  const [typedTease, setTypedTease] = useState('');
+  const [showButton, setShowButton] = useState(false);
+  const [showSkills, setShowSkills] = useState(false);
+  const [visibleSkills, setVisibleSkills] = useState([]);
+  
+  // Hooks para animaciones al hacer scroll
+  const [titleRef, titleVisible] = useScrollAnimation(0.1);
+  const [textRef, textVisible] = useScrollAnimation(0.1);
+  const [skillsRef, skillsVisible] = useScrollAnimation(0.1);
+  
+  const leadText = "Desarrollador Full Stack con dominio completo del ecosistema tecnológico moderno. Combino backend robusto (Node.js, Python, .NET), interfaces de usuario excepcionales (React, TailwindCSS) e inteligencia artificial de vanguardia (YOLO, LangChain, TensorFlow). Mi experiencia en automatización industrial y visión por computadora me permite crear soluciones que van más allá del código tradicional: sistemas que piensan, aprenden y se adaptan.";
+  
+  const teaseText = "Con herramientas como Docker para contenedores, AWS para la nube, y frameworks de IA para machine learning, construyo arquitecturas escalables que resuelven problemas reales. Desde APIs REST que manejan millones de peticiones hasta sistemas de visión artificial embebidos que procesan datos en tiempo real. Mi código no solo funciona, transforma negocios y automatiza procesos complejos.";
+  
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) entry.target.classList.add('animate');
-      },
-      { threshold: 0.35 }
-    );
-    const el = document.querySelector('.about');
-    if (el) observer.observe(el);
-    return () => observer.disconnect();
+    let leadIndex = 0;
+    let teaseIndex = 0;
+    
+    // Mostrar skills inmediatamente sin esperar al texto
+    setTimeout(() => {
+      setShowSkills(true);
+      // Animar skills una por una
+      const totalSkills = 20;
+      for (let i = 0; i < totalSkills; i++) {
+        setTimeout(() => {
+          setVisibleSkills(prev => [...prev, i]);
+        }, i * 80);
+      }
+    }, 500); // Aparecen después de medio segundo
+    
+    // Typing del lead
+    const leadTimer = setInterval(() => {
+      if (leadIndex <= leadText.length) {
+        setTypedLead(leadText.slice(0, leadIndex));
+        leadIndex++;
+      } else {
+        clearInterval(leadTimer);
+        // Iniciar typing del tease
+        const teaseTimer = setInterval(() => {
+          if (teaseIndex <= teaseText.length) {
+            setTypedTease(teaseText.slice(0, teaseIndex));
+            teaseIndex++;
+          } else {
+            clearInterval(teaseTimer);
+            setShowButton(true);
+          }
+        }, 15);
+      }
+    }, 15);
+    
+    return () => clearInterval(leadTimer);
   }, []);
 
   return (
-    <section className="about fade-in" id="about">
-      <div className="container about-grid">
-        <div className="about-main">
-          <h2>Sobre mí</h2>
-          <p className="lead">
-            Desarrollador Full Stack con enfoque en soluciones integradas que
-            combinan backend, frontend e inteligencia artificial. Busco crear
-            experiencias tecnológicas escalables y eficientes.
-          </p>
-          <p className="tease">
-            Mi trabajo une la automatización industrial, la visión artificial y
-            la programación moderna para transformar ideas en productos reales.
-          </p>
-          <div className="about-cta">
+    <section className="about" id="about">
+      <div className="container">
+        <h2 ref={titleRef} className={`animate-glow ${titleVisible ? '' : ''}`}>Sobre mí</h2>
+        
+        {/* Primer bloque: Texto a la izquierda, Skills Backend a la derecha */}
+        <div className="about-row">
+          <div className="about-text-block">
+            <p className="lead">
+              {typedLead}
+              {typedLead.length < leadText.length && <span className="cursor-inline"></span>}
+            </p>
+          </div>
+          
+          <aside className={`skills-block ${showSkills ? 'show' : ''}`}>
+            <h3 className="skills-title">Backend & DevOps</h3>
+            <div className="skills-grid">
+              <div className={`skill-item ${visibleSkills.includes(0) ? 'show' : ''}`}>
+                <FontAwesomeIcon icon={faMicrosoft} className="skill-icon microsoft" />
+                <span>.NET / C#</span>
+              </div>
+              <div className={`skill-item ${visibleSkills.includes(1) ? 'show' : ''}`}>
+                <FontAwesomeIcon icon={faPython} className="skill-icon python" />
+                <span>Python</span>
+              </div>
+              <div className={`skill-item ${visibleSkills.includes(2) ? 'show' : ''}`}>
+                <FontAwesomeIcon icon={faPhp} className="skill-icon php" />
+                <span>PHP</span>
+              </div>
+              <div className={`skill-item ${visibleSkills.includes(3) ? 'show' : ''}`}>
+                <FontAwesomeIcon icon={faNodeJs} className="skill-icon nodejs" />
+                <span>Node.js</span>
+              </div>
+              <div className={`skill-item ${visibleSkills.includes(4) ? 'show' : ''}`}>
+                <FontAwesomeIcon icon={faDatabase} className="skill-icon database" />
+                <span>SQL / DB</span>
+              </div>
+              <div className={`skill-item ${visibleSkills.includes(5) ? 'show' : ''}`}>
+                <FontAwesomeIcon icon={faDocker} className="skill-icon docker" />
+                <span>Docker</span>
+              </div>
+              <div className={`skill-item ${visibleSkills.includes(6) ? 'show' : ''}`}>
+                <FontAwesomeIcon icon={faGitAlt} className="skill-icon git" />
+                <span>Git</span>
+              </div>
+              <div className={`skill-item ${visibleSkills.includes(7) ? 'show' : ''}`}>
+                <FontAwesomeIcon icon={faAws} className="skill-icon aws" />
+                <span>AWS</span>
+              </div>
+            </div>
+          </aside>
+        </div>
+
+        {/* Segundo bloque: Skills Frontend a la izquierda, Texto a la derecha */}
+        <div className="about-row reverse">
+          <aside className={`skills-block ${showSkills ? 'show' : ''}`}>
+            <h3 className="skills-title">Frontend & UI</h3>
+            <div className="skills-grid">
+              <div className={`skill-item ${visibleSkills.includes(8) ? 'show' : ''}`}>
+                <FontAwesomeIcon icon={faReact} className="skill-icon react" />
+                <span>React</span>
+              </div>
+              <div className={`skill-item ${visibleSkills.includes(9) ? 'show' : ''}`}>
+                <FontAwesomeIcon icon={faJsSquare} className="skill-icon javascript" />
+                <span>JavaScript</span>
+              </div>
+              <div className={`skill-item ${visibleSkills.includes(10) ? 'show' : ''}`}>
+                <FontAwesomeIcon icon={faHtml5} className="skill-icon html" />
+                <span>HTML5</span>
+              </div>
+              <div className={`skill-item ${visibleSkills.includes(11) ? 'show' : ''}`}>
+                <FontAwesomeIcon icon={faCss3Alt} className="skill-icon css" />
+                <span>CSS3</span>
+              </div>
+              <div className={`skill-item ${visibleSkills.includes(12) ? 'show' : ''}`}>
+                <FontAwesomeIcon icon={faBootstrap} className="skill-icon bootstrap" />
+                <span>Bootstrap</span>
+              </div>
+              <div className={`skill-item ${visibleSkills.includes(13) ? 'show' : ''}`}>
+                <FontAwesomeIcon icon={faCode} className="skill-icon" />
+                <span>TailwindCSS</span>
+              </div>
+            </div>
+          </aside>
+
+          <div className="about-text-block">
+            <p className="tease">
+              {typedTease}
+              {typedTease.length < teaseText.length && <span className="cursor-inline"></span>}
+            </p>
+          </div>
+        </div>
+
+        {/* Tercer bloque: Botón centrado */}
+        <div className="about-row center">
+          <div className="about-cta" style={{ opacity: showButton ? 1 : 0, transition: 'opacity 0.5s ease' }}>
             <a href="/cv.pdf" className="btn primary" download>
               Descargar CV
             </a>
           </div>
         </div>
 
-        {/* ----------- CINTA GIRATORIA DE HERRAMIENTAS ----------- */}
-        <aside className="about-side">
-          <h3>Herramientas y habilidades</h3>
-          <div className="skills-carousel-wrapper">
-
-            {/* Fila superior → Backend + DevOps */}
-            <div className="skills-track top">
-              <FontAwesomeIcon icon={faMicrosoft} className="skill-icon" title=".NET / C#" />
-              <FontAwesomeIcon icon={faPython} className="skill-icon python" title="Python / Flask" />
-              <FontAwesomeIcon icon={faPhp} className="skill-icon" title="PHP / Laravel" />
-              <FontAwesomeIcon icon={faNodeJs} className="skill-icon nodejs" title="Node.js" />
-              <FontAwesomeIcon icon={faDatabase} className="skill-icon database" title="SQL / DB" />
-              <FontAwesomeIcon icon={faDocker} className="skill-icon docker" title="Docker" />
-              <FontAwesomeIcon icon={faGitAlt} className="skill-icon git" title="Git" />
-              <FontAwesomeIcon icon={faGithub} className="skill-icon" title="GitHub" />
-              <FontAwesomeIcon icon={faGitlab} className="skill-icon" title="SonarQube / CI" />
-              <FontAwesomeIcon icon={faAws} className="skill-icon" title="AWS / Cloud" />
-              <FontAwesomeIcon icon={faCogs} className="skill-icon" title="Automation / RPA" />
-              <FontAwesomeIcon icon={faNetworkWired} className="skill-icon" title="Network Systems" />
+        {/* Cuarto bloque: Skills AI horizontal - Full Width */}
+        <div className="about-row-full">
+          <aside className={`skills-block-wide ${showSkills ? 'show' : ''}`}>
+            <h3 className="skills-title-main">AI & Machine Learning</h3>
+            <p className="skills-subtitle">Inteligencia Artificial de Vanguardia</p>
+            <div className="skills-grid-horizontal">
+              <div className={`skill-item ${visibleSkills.includes(14) ? 'show' : ''}`}>
+                <FontAwesomeIcon icon={faBrain} className="skill-icon ai" />
+                <span>LangChain</span>
+              </div>
+              <div className={`skill-item ${visibleSkills.includes(15) ? 'show' : ''}`}>
+                <FontAwesomeIcon icon={faRobot} className="skill-icon ai" />
+                <span>RPA</span>
+              </div>
+              <div className={`skill-item ${visibleSkills.includes(16) ? 'show' : ''}`}>
+                <FontAwesomeIcon icon={faMicrochip} className="skill-icon ai" />
+                <span>YOLO</span>
+              </div>
+              <div className={`skill-item ${visibleSkills.includes(17) ? 'show' : ''}`}>
+                <FontAwesomeIcon icon={faPython} className="skill-icon python" />
+                <span>TensorFlow</span>
+              </div>
+              <div className={`skill-item ${visibleSkills.includes(18) ? 'show' : ''}`}>
+                <FontAwesomeIcon icon={faCogs} className="skill-icon ai" />
+                <span>OpenCV</span>
+              </div>
+              <div className={`skill-item ${visibleSkills.includes(19) ? 'show' : ''}`}>
+                <FontAwesomeIcon icon={faNetworkWired} className="skill-icon ai" />
+                <span>IoT</span>
+              </div>
             </div>
-
-            {/* Fila inferior → Frontend + IA */}
-            <div className="skills-track bottom">
-              <FontAwesomeIcon icon={faReact} className="skill-icon react" title="React" />
-              <FontAwesomeIcon icon={faJsSquare} className="skill-icon javascript" title="JavaScript" />
-              <FontAwesomeIcon icon={faHtml5} className="skill-icon html" title="HTML" />
-              <FontAwesomeIcon icon={faCss3Alt} className="skill-icon css" title="CSS / TailwindCSS" />
-              <FontAwesomeIcon icon={faBootstrap} className="skill-icon" title="Bootstrap" />
-              <FontAwesomeIcon icon={faCode} className="skill-icon" title="JQuery / Fetch API" />
-              <FontAwesomeIcon icon={faBrain} className="skill-icon" title="LangChain / LangGraph" />
-              <FontAwesomeIcon icon={faRobot} className="skill-icon" title="RPA / Automation" />
-              <FontAwesomeIcon icon={faMicrochip} className="skill-icon" title="YOLO / Embedded AI" />
-              <FontAwesomeIcon icon={faPython} className="skill-icon python" title="PyTorch / TensorFlow" />
-            </div>
-
-          </div>
-        </aside>
+          </aside>
+        </div>
       </div>
 
       {/* ----------- PREMIOS ----------- */}
