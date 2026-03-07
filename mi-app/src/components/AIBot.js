@@ -475,7 +475,7 @@ export default function AIBot() {
       clearTimeout(iconTimer);
       clearTimeout(animTimer);
     };
-  }, [currentSection, isVisible, showTools, faceExpression, showDeliveryBot, isActive, hasGreeted, deliveryComplete]);
+  }, [currentSection, isVisible, showTools, faceExpression, showDeliveryBot, isActive, hasGreeted, deliveryComplete, icons]);
 
   // Cambiar mensaje en secuencia continua - independiente de la sección
   useEffect(() => {
