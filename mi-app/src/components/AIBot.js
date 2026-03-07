@@ -24,7 +24,7 @@ export default function AIBot() {
   const [deliveryComplete, setDeliveryComplete] = useState(false); // Entrega completada
   const [hasGreeted, setHasGreeted] = useState(false); // Si ya saludó
   const [isActive, setIsActive] = useState(false); // Si el bot está activo (después del saludo)
-  const [lastSectionMessageTime, setLastSectionMessageTime] = useState(0); // Control de mensajes de sección
+  // lastSectionMessageTime removido - ya no se usa
   
   const icons = [faRobot, faBrain, faCode, faLaptopCode, faTrophy, faRocket];
   
@@ -470,10 +470,11 @@ export default function AIBot() {
 
     return () => {
       window.removeEventListener('scroll', handleScroll);
+      clearTimeout(appearTimer);
       clearTimeout(iconTimer);
       clearTimeout(animTimer);
     };
-  }, [currentSection, isVisible, showTools, faceExpression, showDeliveryBot, isActive, hasGreeted]);
+  }, [currentSection, isVisible, showTools, faceExpression, showDeliveryBot, isActive, hasGreeted, deliveryComplete]);
 
   // Cambiar mensaje en secuencia continua - independiente de la sección
   useEffect(() => {
@@ -533,7 +534,7 @@ export default function AIBot() {
       clearTimeout(initialTimer);
       if (timeoutId) clearTimeout(timeoutId);
     };
-  }, [isActive, hasGreeted]);
+  }, [isActive, hasGreeted, allMessages]);
 
   // Calcular posición CSS
   const getPositionStyle = () => {

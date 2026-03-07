@@ -13,11 +13,11 @@ import {
   faDocker,
   faPhp,
   faAws,
-  faGithub,
+  // faGithub, // No usado actualmente
   faBootstrap,
-  faLaravel,
+  // faLaravel, // No usado actualmente
   faMicrosoft,
-  faGitlab
+  // faGitlab // No usado actualmente
 } from '@fortawesome/free-brands-svg-icons';
 
 import {
@@ -40,8 +40,8 @@ export default function About() {
   
   // Hooks para animaciones al hacer scroll
   const [titleRef, titleVisible] = useScrollAnimation(0.1);
-  const [textRef, textVisible] = useScrollAnimation(0.1);
-  const [skillsRef, skillsVisible] = useScrollAnimation(0.1);
+  // const [textRef, textVisible] = useScrollAnimation(0.1); // No usado actualmente
+  // const [skillsRef, skillsVisible] = useScrollAnimation(0.1); // No usado actualmente
   
   const leadText = "Desarrollador Full Stack con dominio completo del ecosistema tecnológico moderno. Combino backend robusto (Node.js, Python, .NET), interfaces de usuario excepcionales (React, TailwindCSS) e inteligencia artificial de vanguardia (YOLO, LangChain, TensorFlow). Mi experiencia en automatización industrial y visión por computadora me permite crear soluciones que van más allá del código tradicional: sistemas que piensan, aprenden y se adaptan.";
   
