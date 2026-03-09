@@ -16,11 +16,8 @@ const ALL_MESSAGES = [
   '👆 Tócame. Tengo herramientas útiles',
   '💻 Full Stack Developer especializado en IA y Computer Vision',
   '⚡ Stack: React, Python, Node.js, TensorFlow, YOLO',
-  '📜 Desliza hacia abajo. Hay mucho por ver',
   '🏆 Primer lugar en Hackathon de IA 2024',
-  '🌎 Proyectos desplegados desde Barranquilla',
-  '🧠 Arquitecturas modernas: React + IA integrados',
-  '👇 Explora las secciones. Cada una tiene sorpresas',
+  '🧠 Arquitecturas modernas combinando tecnologías',
   '💡 Compitió contra equipos completos en Universidad del Norte',
   '🎓 Portfolio: e-commerce, IA aplicada, automatización',
   '⚙️ Automatización industrial + Computer Vision avanzada',
@@ -52,9 +49,8 @@ const ALL_MESSAGES = [
   '⚡ DevOps: Docker, CI/CD, deployments automatizados',
   '🎨 UX/UI optimizado para conversión y satisfacción',
   '😎 Herramientas útiles. Úsalas, no solo mires',
-  '📜 Sigue bajando. Proyectos y premios esperan',
   '😏 Me diseñó con useState y useEffect. Elegante, no?',
-  '🎨 Este portafolio: React desde cero. Sin plantillas',
+  '🎨 Portafolio desde cero. Sin plantillas',
   '💅 CSS puro para animaciones. Nada de librerías pesadas',
   '🤖 Mis expresiones faciales: CSS animations. Pura magia',
   '⚡ Typewriter effect: JavaScript vanilla. Rápido y limpio',
@@ -72,7 +68,7 @@ const ALL_MESSAGES = [
   '🧠 IA aplicada a casos reales, más allá de teoría',
   '🚀 Innovación técnica + velocidad + calidad de código',
   '🎯 Preparación técnica sólida + código limpio',
-  '🌟 Contribución activa al ecosistema tech de Barranquilla',
+  '🌟 Contribución activa al ecosistema tech',
   '🔥 Soluciones completas y funcionales en tiempo récord',
   '💡 Liderazgo técnico efectivo, colaboración en equipos',
   '🤓 Tócame. Herramientas que funcionan de verdad',
@@ -83,29 +79,28 @@ const ALL_MESSAGES = [
   '📱 WhatsApp: +57 301 313 7911',
   '💡 Motivado por desafíos técnicos y proyectos innovadores',
   '🚀 Contacto: LinkedIn, GitHub, Email, WhatsApp',
-  '🎯 Respuestas rápidas por eficiencia y pasión por el código',
+  '🎯 Respuestas rápidas por eficiencia y pasión',
   '⚡ Barranquilla, Colombia - Trabajo remoto disponible',
   '🔥 Especialización: Full Stack, IA, Computer Vision',
   '🌐 Proyectos locales e internacionales',
   '💻 Modalidades: Freelance, colaboraciones, full-time',
   '🎨 Consultoría técnica o desarrollo end-to-end',
-  '🎭 Mis animaciones: keyframes CSS. Suaves y fluidas',
+  '🎭 Animaciones: keyframes CSS. Suaves y fluidas',
   '💫 Efectos de hover: transiciones calculadas al milisegundo',
   '🎪 Tour guiado: scroll programático con smooth behavior',
   '📦 Bot mensajero del CV: animación secuencial coordinada',
   '🎨 Gradientes y sombras: diseño visual sin imágenes',
   '⚙️ Estado manejado con hooks: useState, useEffect maestría',
   '🔄 Ciclo de mensajes: setInterval inteligente sin memory leaks',
-  '👇 Navega por las secciones. Interactúa',
+  '👇 Desliza para ver más contenido',
 ];
 
 export default function AIBot() {
   const [isVisible, setIsVisible] = useState(false);
   const [currentIcon, setCurrentIcon] = useState(0);
   const [message, setMessage] = useState('');
-  const [tempMessage, setTempMessage] = useState(''); // Mensajes temporales que no interrumpen el ciclo
   const [displayedMessage, setDisplayedMessage] = useState(''); // Mensaje con efecto typewriter
-  const [currentSection, setCurrentSection] = useState('header');
+  const [currentSection, setCurrentSection] = useState(0); // Ahora es un número para alternar posiciones
   const [showTools, setShowTools] = useState(false);
   const [faceExpression, setFaceExpression] = useState('happy'); // happy, talking, thinking, excited, surprised
   const [botAnimation, setBotAnimation] = useState(''); // spin, bounce, shake, wiggle
@@ -115,20 +110,26 @@ export default function AIBot() {
   const [deliveryComplete, setDeliveryComplete] = useState(false); // Entrega completada
   const [hasGreeted, setHasGreeted] = useState(false); // Si ya saludó
   const [isActive, setIsActive] = useState(false); // Si el bot está activo (después del saludo)
-  // lastSectionMessageTime removido - ya no se usa
+  const [hoveredZone, setHoveredZone] = useState(null); // Zona donde está el cursor
+  const [lastHoveredZone, setLastHoveredZone] = useState(null); // Última zona visitada
+  const [mouseDebounceTimer, setMouseDebounceTimer] = useState(null); // Timer para debounce
+  const [isTyping, setIsTyping] = useState(false); // Si está escribiendo un mensaje
+  const [lastZoneChangeTime, setLastZoneChangeTime] = useState(0); // Timestamp del último cambio de zona
+  const [isScrolling, setIsScrolling] = useState(false); // Si el usuario está haciendo scroll
+  const [scrollTimer, setScrollTimer] = useState(null); // Timer para detectar fin de scroll
+  const [botPosition, setBotPosition] = useState({ x: 0, y: 0 }); // Posición del bot en pantalla
+  const [isMinimized, setIsMinimized] = useState(false); // Si el bot está minimizado
   
   const icons = useMemo(() => [faRobot, faBrain, faCode, faLaptopCode, faTrophy, faRocket], []);
   
-  // Función para hacer un tour guiado por las secciones
   const startTour = () => {
-    setTempMessage('🎯 Recorrido iniciado. Sígueme');
+    setMessage('🎯 Recorrido iniciado. Sígueme');
     setFaceExpression('excited');
     setBotAnimation('spin');
     
     setTimeout(() => {
       setFaceExpression('happy');
       setBotAnimation('');
-      setTempMessage('');
     }, 3000);
     
     // Secuencia de navegación por secciones
@@ -147,12 +148,11 @@ export default function AIBot() {
         
         if (element) {
           element.scrollIntoView({ behavior: 'smooth', block: 'center' });
-          setTempMessage(section.message);
+          setMessage(section.message);
           setFaceExpression('talking');
           
           setTimeout(() => {
             setFaceExpression('happy');
-            setTimeout(() => setTempMessage(''), 4000);
           }, 2000);
         }
       }, section.delay);
@@ -160,20 +160,17 @@ export default function AIBot() {
     
     // Mensaje final
     setTimeout(() => {
-      setTempMessage('✨ Recorrido completo. Preguntas?');
+      setMessage('✨ Recorrido completo. Preguntas?');
       setFaceExpression('excited');
       setTimeout(() => {
         setFaceExpression('happy');
-        setTempMessage('');
       }, 5000);
     }, 28000);
   };
   
   // Efecto typewriter para escribir el mensaje letra por letra
   useEffect(() => {
-    const currentMessage = tempMessage || message; // Priorizar mensaje temporal
-    
-    if (!currentMessage) {
+    if (!message) {
       setDisplayedMessage('');
       return;
     }
@@ -185,12 +182,12 @@ export default function AIBot() {
     const baseSpeed = 25; // Velocidad base más rápida
     
     const typeNextChar = () => {
-      if (index <= currentMessage.length) {
-        setDisplayedMessage(currentMessage.slice(0, index));
+      if (index <= message.length) {
+        setDisplayedMessage(message.slice(0, index));
         index++;
         
         // Velocidad variable: más rápido en espacios, más lento en puntuación
-        const char = currentMessage[index - 1];
+        const char = message[index - 1];
         let delay = baseSpeed;
         
         if (char === ' ') delay = baseSpeed * 0.4; // Espacios muy rápidos
@@ -205,7 +202,7 @@ export default function AIBot() {
     typeNextChar();
     
     return () => {}; // Cleanup si es necesario
-  }, [message, tempMessage]);
+  }, [message]);
   
   
   // Herramientas contextuales por sección - acciones útiles tipo Mickey Mouse
@@ -353,42 +350,111 @@ export default function AIBot() {
     const appearTimer = setTimeout(() => {
       setIsVisible(true);
       
-      // Ya NO saludar automáticamente - esperar a que el usuario haga clic
-      // El bot aparece pero permanece inactivo hasta el primer clic
+      // Activar automáticamente después de 1 segundo de aparecer
+      setTimeout(() => {
+        if (!hasGreeted) {
+          activateBot();
+        }
+      }, 1000);
     }, 2000);
 
-    // Detectar sección actual con scroll
-    const handleScroll = () => {
-      // Ya NO activar bot con scroll - solo con clic
+    // Detectar zona donde está el cursor del usuario con DEBOUNCE LARGO y COOLDOWN
+    const handleMouseMove = (e) => {
+      // No detectar si está escribiendo, haciendo scroll, o si cambió de zona recientemente
+      if (!isActive || isTyping || isScrolling) return;
       
-      const scrollPosition = window.scrollY + window.innerHeight / 2;
-      const sections = ['header', 'about', 'projects', 'contact'];
+      // Cooldown: no permitir cambios de zona más frecuentes que cada 5 segundos
+      const now = Date.now();
+      const timeSinceLastChange = now - lastZoneChangeTime;
+      if (timeSinceLastChange < 5000) return; // Mínimo 5 segundos entre cambios
       
-      let newSection = 'header';
-      sections.forEach(section => {
-        const element = document.getElementById(section) || document.querySelector(`.${section}`);
-        if (element) {
-          const rect = element.getBoundingClientRect();
-          const elementTop = rect.top + window.scrollY;
-          const elementBottom = elementTop + rect.height;
-          
-          if (scrollPosition >= elementTop && scrollPosition <= elementBottom) {
-            newSection = section;
+      // Limpiar timer anterior
+      if (mouseDebounceTimer) {
+        clearTimeout(mouseDebounceTimer);
+      }
+      
+      // Crear nuevo timer con debounce de 2500ms (2.5 segundos)
+      const timer = setTimeout(() => {
+        const mouseX = e.clientX;
+        const mouseY = e.clientY;
+        const windowHeight = window.innerHeight;
+        const windowWidth = window.innerWidth;
+        
+        // Calcular posición relativa del cursor
+        const relativeY = (windowHeight - mouseY) / windowHeight * 100; // bottom %
+        const relativeX = mouseX / windowWidth * 100; // left %
+        
+        // Detectar zona basada en la posición del cursor
+        let detectedZone = null;
+        
+        // HEADER (arriba)
+        if (relativeY > 70) {
+          if (relativeX > 60) {
+            detectedZone = 'header-avatar';
+          } else if (relativeX < 40) {
+            detectedZone = 'header-info';
+          } else {
+            detectedZone = 'header-center';
           }
         }
-      });
-
-      // Detectar sección de premios
-      const awardsElement = document.querySelector('.awards-section');
-      if (awardsElement) {
-        const rect = awardsElement.getBoundingClientRect();
-        if (rect.top < window.innerHeight && rect.bottom > 0) {
-          newSection = 'awards';
+        // ABOUT (medio-alto)
+        else if (relativeY > 40 && relativeY <= 70) {
+          if (relativeX < 40) {
+            detectedZone = 'about-description';
+          } else if (relativeX > 60) {
+            detectedZone = 'about-skills';
+          } else {
+            detectedZone = 'about-center';
+          }
         }
+        // PROJECTS (medio)
+        else if (relativeY > 20 && relativeY <= 40) {
+          detectedZone = 'projects';
+        }
+        // CONTACT/FOOTER (abajo)
+        else if (relativeY <= 20) {
+          detectedZone = 'contact';
+        }
+        
+        // MENÚ LATERAL DERECHO
+        if (relativeX > 90) {
+          detectedZone = 'social-menu';
+        }
+        
+        // Solo actualizar si cambió de zona Y ha pasado suficiente tiempo
+        if (detectedZone && detectedZone !== hoveredZone) {
+          setHoveredZone(detectedZone);
+          setLastZoneChangeTime(Date.now());
+        }
+      }, 2500); // Esperar 2.5 segundos antes de cambiar
+      
+      setMouseDebounceTimer(timer);
+    };
+    
+    // Detectar cuando el usuario está haciendo scroll
+    const handleScrollStart = () => {
+      setIsScrolling(true);
+      
+      // Limpiar timer anterior
+      if (scrollTimer) {
+        clearTimeout(scrollTimer);
       }
-
-      // Detectar botón de CV - activar animación de entrega SOLO en sección "about"
-      if (newSection === 'about' && !deliveryComplete && isVisible && isActive) {
+      
+      // Después de 1 segundo sin scroll, permitir detección de nuevo
+      const timer = setTimeout(() => {
+        setIsScrolling(false);
+      }, 1000);
+      
+      setScrollTimer(timer);
+    };
+    
+    window.addEventListener('mousemove', handleMouseMove);
+    window.addEventListener('scroll', handleScrollStart, { passive: true });
+    
+    // Detectar sección actual con scroll - simplificado
+    const handleScroll = () => {
+      // Detectar botón de CV - activar animación de entrega
+      if (!deliveryComplete && isVisible && isActive) {
         const cvButton = document.querySelector('.about-cta');
         if (cvButton) {
           const rect = cvButton.getBoundingClientRect();
@@ -410,15 +476,13 @@ export default function AIBot() {
                   setShowDeliveryBot(false);
                   setDeliveryComplete(true);
                   
-                  // El bot principal muestra el CV y cambia mensaje temporalmente
+                  // El bot principal muestra el CV
                   setTimeout(() => {
                     setFaceExpression('happy');
-                    setTempMessage('📄 Curriculum Vitae disponible para descarga');
                     
                     // El icono de CV desaparece después de 5 segundos
                     setTimeout(() => {
                       setCvIcon(false);
-                      setTempMessage(''); // Limpiar mensaje temporal
                     }, 5000);
                   }, 1000);
                 }, 1500);
@@ -426,14 +490,6 @@ export default function AIBot() {
             }, 1000);
           }
         }
-      }
-
-      if (newSection !== currentSection) {
-        setCurrentSection(newSection);
-        setShowTools(false); // Cerrar herramientas al cambiar de sección
-        
-        // Mensajes contextuales DESACTIVADOS para evitar interferencias al deslizar
-        // El bot solo habla con su ciclo de mensajes principal
       }
     };
 
@@ -468,101 +524,366 @@ export default function AIBot() {
     };
 
     const animTimer = setTimeout(randomAnimations, 8000);
+    
+
 
     return () => {
       window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('scroll', handleScrollStart);
+      window.removeEventListener('mousemove', handleMouseMove);
       clearTimeout(appearTimer);
       clearTimeout(iconTimer);
       clearTimeout(animTimer);
+      if (mouseDebounceTimer) clearTimeout(mouseDebounceTimer);
+      if (scrollTimer) clearTimeout(scrollTimer);
     };
-  }, [currentSection, isVisible, showTools, faceExpression, showDeliveryBot, isActive, hasGreeted, deliveryComplete, icons]);
+  }, [currentSection, isVisible, showTools, faceExpression, showDeliveryBot, isActive, hasGreeted, deliveryComplete, icons, hoveredZone, isTyping, mouseDebounceTimer, scrollTimer, lastZoneChangeTime, isScrolling]);
 
-  // Cambiar mensaje en secuencia continua - independiente de la sección
+  // Reaccionar cuando el usuario pasa el cursor por una zona
   useEffect(() => {
-    // Solo mostrar mensajes si el bot está activo
+    if (!hoveredZone || !isActive || hoveredZone === lastHoveredZone || isTyping || isScrolling) return;
+    
+    // Mensajes contextuales organizados por zona con COHERENCIA
+    const zoneMessages = {
+      'header-avatar': [
+        '👋 Aquí está Michael Menco Cuello',
+        '📸 Ingeniero Full Stack especializado en IA',
+      ],
+      'header-info': [
+        '📧 Información de contacto disponible',
+        '📱 Email: mencocuellomaicol@gmail.com',
+        '☎️ WhatsApp: +57 301 313 7911',
+      ],
+      'header-center': [
+        '✨ Bienvenido al portafolio de Michael',
+        '💼 Full Stack Developer con enfoque en IA',
+        '🚀 Explora proyectos y experiencia técnica',
+      ],
+      'about-description': [
+        '📝 Sobre Michael y su experiencia',
+        '👨‍💻 Dominio completo: Backend, Frontend e IA',
+        '🔧 Especialista en automatización industrial',
+      ],
+      'about-skills': [
+        '⚙️ Stack técnico completo',
+        '💻 Backend: .NET/C#, Python, Node.js, PHP',
+        '⚛️ Frontend: React, JavaScript, HTML5, CSS3',
+        '🤖 IA: YOLO, TensorFlow, LangChain, OpenCV',
+      ],
+      'about-center': [
+        '🎯 Sección de habilidades técnicas',
+        '💡 Tecnologías dominadas y en uso',
+      ],
+      'projects': [
+        '🚀 Proyectos destacados de Michael',
+        '💻 Mich2dev: Arquitecturas escalables',
+        '🛒 E-commerce: Sistema completo funcional',
+        '🤖 Calibración IA: Computer Vision con YOLO',
+        '📦 Cargo: Backend logístico robusto',
+      ],
+      'contact': [
+        '📧 Sección de contacto',
+        '💬 Email, WhatsApp, LinkedIn disponibles',
+        '⚡ Respuesta rápida garantizada',
+        '🌍 Trabajo remoto disponible',
+      ],
+      'social-menu': [
+        '🌐 Menú de redes sociales',
+        '💼 GitHub: Mich2Dev - Código público',
+        '🔗 LinkedIn para networking profesional',
+        '📱 WhatsApp para contacto directo',
+      ],
+    };
+    
+    const messages = zoneMessages[hoveredZone];
+    if (messages) {
+      const randomMessage = messages[Math.floor(Math.random() * messages.length)];
+      
+      // Marcar que está escribiendo
+      setIsTyping(true);
+      setMessage(randomMessage);
+      setLastHoveredZone(hoveredZone);
+      
+      // Calcular tiempo de escritura basado en longitud del mensaje
+      const typingTime = randomMessage.length * 25; // 25ms por carácter
+      
+      // Después de terminar de escribir, esperar 3 segundos antes de permitir otro cambio
+      setTimeout(() => {
+        setTimeout(() => {
+          setIsTyping(false);
+        }, 3000); // Esperar 3 segundos después de terminar de escribir
+      }, typingTime);
+      
+      console.log('🎯 Usuario en zona:', hoveredZone, '| Mensaje:', randomMessage);
+    }
+  }, [hoveredZone, isActive, lastHoveredZone, isTyping, isScrolling]);
+  useEffect(() => {
+    if (!isActive || !isVisible) return;
+    
+    // Si el usuario está interactuando (cursor sobre una zona), no cambiar automáticamente
+    if (hoveredZone) return;
+    
+    // Obtener mensaje contextual de la zona actual
+    const { message: contextMessage } = getPositionAndMessage();
+    console.log('📝 Actualizando mensaje automático:', contextMessage);
+    setMessage(contextMessage);
+    
+    setFaceExpression('talking');
+    setBotAnimation('wiggle');
+    
+    setTimeout(() => {
+      setFaceExpression('happy');
+      setBotAnimation('');
+    }, 2000);
+    
+  }, [currentSection, isActive, isVisible, hoveredZone]);
+
+  // Sistema de movimiento automático: cada cambio de currentSection actualiza posición y mensaje
+  // SOLO si el usuario NO está interactuando con el cursor
+
+  // Cambiar mensaje y posición cada 6 segundos (solo si no hay interacción del cursor)
+  useEffect(() => {
     if (!isActive) return;
     
-    let messageIndex = 0;
-    let timeoutId = null;
-
-    // Esperar tiempo después de activarse para mostrar primer mensaje
     const initialDelay = hasGreeted ? 2000 : 0;
     
     const initialTimer = setTimeout(() => {
-      // Mostrar primer mensaje
-      setMessage(ALL_MESSAGES[messageIndex]);
-      setFaceExpression('talking');
-      
-      // Primer mensaje se queda 5 segundos
-      setTimeout(() => setFaceExpression('happy'), 5000);
-      
-      // Función para cambiar al siguiente mensaje
-      const changeMessage = () => {
-        messageIndex = (messageIndex + 1) % ALL_MESSAGES.length;
-        
-        // Expresión de pensamiento antes de cambiar mensaje
-        setFaceExpression('thinking');
-        
-        setTimeout(() => {
-          setMessage(ALL_MESSAGES[messageIndex]);
-          setFaceExpression('talking');
-          
-          // Calcular tiempo que el mensaje estará visible basado en su longitud
-          const messageLength = ALL_MESSAGES[messageIndex].length;
-          let displayTime;
-          
-          if (messageLength < 50) {
-            displayTime = 4000 + Math.random() * 1000; // 4-5 segundos
-          } else if (messageLength < 80) {
-            displayTime = 5500 + Math.random() * 1500; // 5.5-7 segundos
-          } else {
-            displayTime = 7000 + Math.random() * 2000; // 7-9 segundos
-          }
-          
-          // Cambiar expresión a happy después de un tiempo
-          setTimeout(() => setFaceExpression('happy'), displayTime * 0.4);
-          
-          // Programar el siguiente cambio de mensaje
-          timeoutId = setTimeout(changeMessage, displayTime);
-        }, 800);
+      // Función para cambiar a la siguiente zona
+      const moveToNextZone = () => {
+        // Solo mover automáticamente si el usuario NO está interactuando
+        if (!hoveredZone && !isTyping) {
+          setCurrentSection(prev => {
+            const next = prev + 1;
+            console.log('🔄 Bot moviéndose a zona:', next);
+            return next;
+          });
+        }
       };
       
-      // Primer cambio de mensaje después de 7-9 segundos
-      timeoutId = setTimeout(changeMessage, 7000 + Math.random() * 2000);
+      // Primera ejecución inmediata
+      moveToNextZone();
+      
+      // Luego cada 6 segundos
+      const interval = setInterval(moveToNextZone, 6000);
+      
+      return () => clearInterval(interval);
     }, initialDelay);
 
     return () => {
       clearTimeout(initialTimer);
-      if (timeoutId) clearTimeout(timeoutId);
     };
-  }, [isActive, hasGreeted]); // ALL_MESSAGES es constante, no necesita estar en dependencias
+  }, [isActive, hasGreeted, hoveredZone, isTyping]);
 
-  // Calcular posición CSS
-  const getPositionStyle = () => {
-    const positions = {
-      header: { bottom: '120px', left: '20%' },
-      about: { bottom: '150px', left: '75%' },
-      projects: { bottom: '100px', left: '25%' },
-      awards: { bottom: '130px', left: '50%' },
-      contact: { bottom: '110px', left: '70%' }
-    };
+  // Calcular posición CSS y mensaje contextual basado EXACTAMENTE en el CV
+  const getPositionAndMessage = () => {
+    // Mensajes organizados con COHERENCIA NARRATIVA - cada mensaje tiene contexto completo
+    const zones = [
+      // ZONA 1: PRESENTACIÓN INICIAL
+      {
+        position: { bottom: '60%', left: '50%' },
+        messages: [
+          '👋 Hola, soy el asistente de Michael Menco',
+          '🤖 Te mostraré su portafolio profesional',
+        ]
+      },
+      
+      // ZONA 2: QUIÉN ES
+      {
+        position: { bottom: '58%', left: '70%' },
+        messages: [
+          '👨‍💻 Michael Menco - Ingeniero Full Stack',
+          '📍 Desarrollador de Barranquilla, Colombia',
+        ]
+      },
+      
+      // ZONA 3: ESPECIALIZACIÓN
+      {
+        position: { bottom: '56%', left: '30%' },
+        messages: [
+          '🎯 Experto en IA y Computer Vision',
+          '⚡ Desarrollador Full Stack con automatización',
+        ]
+      },
+      
+      // ZONA 4: CONTACTO PRINCIPAL
+      {
+        position: { bottom: '54%', left: '25%' },
+        messages: [
+          '📧 Contáctalo: mencocuellomaicol@gmail.com',
+          '📱 WhatsApp disponible: +57 301 313 7911',
+        ]
+      },
+      
+      // ZONA 5: STACK BACKEND
+      {
+        position: { bottom: '50%', left: '70%' },
+        messages: [
+          '⚙️ Domina Backend: .NET/C#, Python, Node.js',
+          '🗄️ Maneja bases de datos SQL y PostgreSQL',
+        ]
+      },
+      
+      // ZONA 6: STACK FRONTEND
+      {
+        position: { bottom: '48%', left: '25%' },
+        messages: [
+          '⚛️ Crea interfaces con React y JavaScript',
+          '🎨 Diseña con HTML5, CSS3 y Bootstrap',
+        ]
+      },
+      
+      // ZONA 7: INTELIGENCIA ARTIFICIAL
+      {
+        position: { bottom: '46%', left: '70%' },
+        messages: [
+          '🤖 Implementa IA con YOLO y TensorFlow',
+          '🧠 Usa LangChain para procesamiento de texto',
+        ]
+      },
+      
+      // ZONA 8: DEVOPS Y HERRAMIENTAS
+      {
+        position: { bottom: '44%', left: '30%' },
+        messages: [
+          '🐳 Trabaja con Docker, Git y AWS',
+          '🔧 Automatiza procesos industriales e IoT',
+        ]
+      },
+      
+      // ZONA 9: FILOSOFÍA DE TRABAJO
+      {
+        position: { bottom: '42%', left: '50%' },
+        messages: [
+          '💡 Construye soluciones inteligentes y adaptables',
+          '🏗️ Diseña arquitecturas escalables y limpias',
+        ]
+      },
+      
+      // ZONA 10: LOGRO PRINCIPAL
+      {
+        position: { bottom: '38%', left: '50%' },
+        messages: [
+          '🏆 Ganó 1er Lugar en Hackathon de IA 2024',
+          '🥇 Hackathon Barranqui-IA organizado por Google',
+          '⭐ Primera competencia de IA en el Caribe',
+        ]
+      },
+      
+      // ZONA 11: PROYECTO 1 - MICH2DEV
+      {
+        position: { bottom: '32%', left: '20%' },
+        messages: [
+          '💻 Mich2dev: Su repositorio de arquitecturas',
+          '📚 Contiene implementaciones avanzadas',
+          '🏗️ Código escalable y bien documentado',
+        ]
+      },
+      
+      // ZONA 12: PROYECTO 2 - E-COMMERCE
+      {
+        position: { bottom: '30%', left: '50%' },
+        messages: [
+          '🛒 E-commerce Full Stack funcional',
+          '⚛️ Desarrollado con React y estado avanzado',
+          '💳 Incluye carrito, pagos e inventario',
+        ]
+      },
+      
+      // ZONA 13: PROYECTO 3 - IA CALIBRACIÓN
+      {
+        position: { bottom: '28%', left: '80%' },
+        messages: [
+          '🤖 Sistema de Calibración con IA',
+          '📹 Usa Computer Vision y YOLO en tiempo real',
+          '🎯 Detecta dígitos analógicos automáticamente',
+        ]
+      },
+      
+      // ZONA 14: PROYECTO 4 - CARGO
+      {
+        position: { bottom: '26%', left: '35%' },
+        messages: [
+          '📦 Cargo: Sistema de Gestión Logística',
+          '🔐 Backend con Node.js y PostgreSQL',
+          '🔒 Seguridad con JWT y tracking completo',
+        ]
+      },
+      
+      // ZONA 15: MENÚ SOCIAL
+      {
+        position: { bottom: '50%', left: '92%' },
+        messages: [
+          '🌐 Visita su GitHub: Mich2Dev',
+          '💼 Conéctate con él en LinkedIn',
+          '📱 Escríbele por WhatsApp o Email',
+        ]
+      },
+      
+      // ZONA 16: LLAMADO A LA ACCIÓN - CONTACTO
+      {
+        position: { bottom: '18%', left: '50%' },
+        messages: [
+          '📧 ¿Tienes un proyecto? Contáctalo ahora',
+          '💬 Responde rápido y trabaja remoto',
+          '🤝 Está disponible para colaborar',
+        ]
+      },
+      
+      // ZONA 17: CIERRE PROFESIONAL
+      {
+        position: { bottom: '10%', left: '50%' },
+        messages: [
+          '✨ Convierte ideas en software real',
+          '🚀 Busca nuevos desafíos técnicos',
+          '💼 Ubicado en Barranquilla - Remoto OK',
+        ]
+      },
+    ];
 
-    const pos = positions[currentSection] || positions.header;
+    const zone = zones[currentSection % zones.length];
+    const message = zone.messages[Math.floor(Math.random() * zone.messages.length)];
+    
+    console.log('🤖 Bot en zona:', currentSection % zones.length, '| Mensaje:', message);
     
     return {
-      bottom: pos.bottom,
-      left: pos.left,
-      transition: 'bottom 1.2s cubic-bezier(0.4, 0, 0.2, 1), left 1.2s cubic-bezier(0.4, 0, 0.2, 1)',
+      position: zone.position,
+      message: message
     };
   };
 
   const handleBotClick = () => {
+    console.log('🤖 Bot clicked! hasGreeted:', hasGreeted, 'isMinimized:', isMinimized, 'showTools:', showTools);
+    
     // Activar bot con el clic SOLO si no ha saludado
     if (!hasGreeted) {
       activateBot();
       return; // No abrir herramientas en el primer clic
     }
     
+    // Si está minimizado, restaurar
+    if (isMinimized) {
+      setIsMinimized(false);
+      return;
+    }
+    
+    // Calcular posición actual del bot en la pantalla SIEMPRE
+    // Usar requestAnimationFrame para asegurar que el DOM esté actualizado
+    requestAnimationFrame(() => {
+      const botElement = document.querySelector('.bot-circle');
+      if (botElement) {
+        const rect = botElement.getBoundingClientRect();
+        const newPosition = {
+          x: rect.left + rect.width / 2,
+          y: rect.top + rect.height / 2
+        };
+        setBotPosition(newPosition);
+        console.log('🎯 Bot position:', newPosition, 'Rect:', rect);
+      } else {
+        console.error('❌ Bot element not found!');
+      }
+    });
+    
+    console.log('🔧 Toggling tools. Current showTools:', showTools, 'Will be:', !showTools);
     setShowTools(!showTools);
     
     // Crear partículas de brillo
@@ -596,24 +917,29 @@ export default function AIBot() {
   const handleBotHover = () => {
     // Hover desactivado - no hace nada para evitar interferencias
   };
+  
+  // Doble clic para minimizar el bot
+  const handleBotDoubleClick = () => {
+    setIsMinimized(!isMinimized);
+    setShowTools(false);
+    setMessage(isMinimized ? '👋 Estoy de vuelta' : '😴 Modo compacto');
+  };
 
   const handleToolClick = (tool) => {
     // Ejecutar la acción de la herramienta
     tool.action();
     
-    // Reacción del bot con mensaje temporal
-    setTempMessage(tool.message);
+    // Reacción del bot
     setFaceExpression('excited');
     setBotAnimation('jump');
     
     // Crear confeti
     createConfetti();
     
-    // Volver a normal y limpiar mensaje temporal
+    // Volver a normal
     setTimeout(() => {
       setFaceExpression('happy');
       setBotAnimation('');
-      setTempMessage(''); // Limpiar mensaje temporal después de 3 segundos
     }, 3000);
   };
 
@@ -664,8 +990,45 @@ export default function AIBot() {
 
   return (
     <div 
-      className={`ai-bot ${isVisible ? 'visible' : ''} ${isActive ? 'active' : ''}`}
-      style={getPositionStyle()}
+      className={`ai-bot ${isVisible ? 'visible' : ''} ${isActive ? 'active' : ''} ${isMinimized ? 'minimized' : ''}`}
+      style={{
+        bottom: hoveredZone 
+          ? (() => {
+              const zonePositions = {
+                'header-avatar': '60%',
+                'header-info': '55%',
+                'header-center': '58%',
+                'about-description': '50%',
+                'about-skills': '48%',
+                'about-center': '50%',
+                'projects': '30%',
+                'contact': '15%',
+                'social-menu': '50%',
+              };
+              return zonePositions[hoveredZone] || getPositionAndMessage().position.bottom;
+            })()
+          : getPositionAndMessage().position.bottom,
+        left: hoveredZone 
+          ? (() => {
+              const zonePositions = {
+                'header-avatar': '70%',
+                'header-info': '25%',
+                'header-center': '50%',
+                'about-description': '25%',
+                'about-skills': '70%',
+                'about-center': '50%',
+                'projects': '50%',
+                'contact': '50%',
+                'social-menu': '88%',
+              };
+              return zonePositions[hoveredZone] || getPositionAndMessage().position.left;
+            })()
+          : getPositionAndMessage().position.left,
+        right: 'auto',
+        top: 'auto',
+      }}
+      onDoubleClick={handleBotDoubleClick}
+      title={isMinimized ? "Doble clic para restaurar" : "Doble clic para minimizar"}
     >
       <div className="bot-container">
         {/* Círculos de pulso */}
@@ -741,29 +1104,38 @@ export default function AIBot() {
         {/* Herramientas tipo Mickey Mouse */}
         {showTools && (
           <div className="bot-tools">
-            {tools.map((tool, index) => (
-              <div 
-                key={index}
-                className="tool-item"
-                style={{ '--tool-index': index }}
-                onClick={(e) => {
-                  e.stopPropagation();
-                  handleToolClick(tool);
-                }}
-              >
-                <FontAwesomeIcon icon={tool.icon} />
-                <span className="tool-label">{tool.label}</span>
-              </div>
-            ))}
+            {tools.map((tool, index) => {
+              // Calcular posición en círculo alrededor del bot
+              const angle = (360 / tools.length) * index;
+              const radius = 110; // Radio del círculo
+              const radian = (angle - 90) * (Math.PI / 180);
+              const x = botPosition.x + Math.cos(radian) * radius;
+              const y = botPosition.y + Math.sin(radian) * radius;
+              
+              return (
+                <div 
+                  key={index}
+                  className="tool-item"
+                  style={{ 
+                    '--tool-index': index,
+                    left: `${x}px`,
+                    top: `${y}px`,
+                    transform: 'translate(-50%, -50%)'
+                  }}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleToolClick(tool);
+                  }}
+                >
+                  <FontAwesomeIcon icon={tool.icon} />
+                  <span className="tool-label">{tool.label}</span>
+                </div>
+              );
+            })}
           </div>
         )}
         
         {/* Mensaje flotante */}
-        {!hasGreeted && !displayedMessage && (
-          <div className="bot-message">
-            👆 Haz clic para comenzar
-          </div>
-        )}
         {displayedMessage && !showTools && (
           <div className="bot-message">
             {displayedMessage}

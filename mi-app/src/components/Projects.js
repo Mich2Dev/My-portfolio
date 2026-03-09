@@ -1,120 +1,85 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import './Projects.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGithub } from '@fortawesome/free-brands-svg-icons';
+import { faEye, faRocket, faRobot, faGaugeHigh, faTruck, faShoppingBag } from '@fortawesome/free-solid-svg-icons';
 
-function ProjectCard({ title, description, link, image, index }) {
-  const [typedTitle, setTypedTitle] = useState('');
-  const [typedDesc, setTypedDesc] = useState('');
-  const [showButton, setShowButton] = useState(false);
-  
-  useEffect(() => {
-    // Delay inicial basado en el índice de la tarjeta
-    const initialDelay = index * 200;
-    
-    // Typing del título
-    const titleTimer = setTimeout(() => {
-      let titleIndex = 0;
-      const titleInterval = setInterval(() => {
-        if (titleIndex <= title.length) {
-          setTypedTitle(title.slice(0, titleIndex));
-          titleIndex++;
-        } else {
-          clearInterval(titleInterval);
-          // Iniciar typing de descripción
-          let descIndex = 0;
-          const descInterval = setInterval(() => {
-            if (descIndex <= description.length) {
-              setTypedDesc(description.slice(0, descIndex));
-              descIndex++;
-            } else {
-              clearInterval(descInterval);
-              setShowButton(true);
-            }
-          }, 15);
-        }
-      }, 50);
-    }, initialDelay);
-    
-    return () => clearTimeout(titleTimer);
-  }, [title, description, index]);
-
+function ProjectCard({ title, description, link, icon, index, tags }) {
   return (
-    <article className="project-card">
-      {image && <img src={image} alt={title} className="project-image" />}
-      <div className="project-content">
-        <h3 className="project-title">
-          {typedTitle}
-          {typedTitle.length < title.length && <span className="cursor-inline"></span>}
-        </h3>
-        <p className="project-description">
-          {typedDesc}
-          {typedDesc.length < description.length && <span className="cursor-inline"></span>}
-        </p>
-        <a 
-          href={link} 
-          target="_blank" 
-          rel="noreferrer" 
-          className={`github-link ${showButton ? 'show' : ''}`}
-        >
-          <FontAwesomeIcon icon={faGithub} /> Ver en GitHub
-        </a>
+    <article className="modern-project-card">
+      
+      <div className="card-image-wrapper">
+        <div className="card-icon-display">
+          <FontAwesomeIcon icon={icon} />
+        </div>
+        <div className="image-overlay">
+          <a href={link} target="_blank" rel="noreferrer" className="view-icon">
+            <FontAwesomeIcon icon={faEye} />
+          </a>
+        </div>
+      </div>
+
+      <div className="card-body">
+        <h3 className="card-title">{title}</h3>
+        
+        <div className="tech-tags">
+          {tags.map((tag, i) => (
+            <span key={i} className="tech-tag">{tag}</span>
+          ))}
+        </div>
+
+        <p className="card-description">{description}</p>
+
+        <div className="card-footer">
+          <a href={link} target="_blank" rel="noreferrer" className="github-button">
+            <FontAwesomeIcon icon={faGithub} />
+            <span>Ver Repositorio</span>
+          </a>
+          <div className="rocket-icon">
+            <FontAwesomeIcon icon={faRocket} />
+          </div>
+        </div>
       </div>
     </article>
   );
 }
 
 export default function Projects() {
-  const [typedTitle, setTypedTitle] = useState('');
-  const titleText = "Proyectos & Repositorio";
-  
-  useEffect(() => {
-    let index = 0;
-    const timer = setInterval(() => {
-      if (index <= titleText.length) {
-        setTypedTitle(titleText.slice(0, index));
-        index++;
-      } else {
-        clearInterval(timer);
-      }
-    }, 80);
-    
-    return () => clearInterval(timer);
-  }, []);
   const projects = [
     {
-      title: 'Mich2dev',
-      description: 'Repositorio técnico con implementaciones avanzadas, demos interactivas y documentación de arquitecturas escalables. Showcase de soluciones full stack y patrones de diseño.',
-      link: 'https://github.com/Mich2Dev/Mich2dev',
-      image: '/images/dashboard.svg',
+      title: 'Gecko Agent',
+      description: 'Chat conversacional con IA para extracción de datos de imágenes. Sistema de rastreo, monitoreo y búsqueda de personas perdidas.',
+      link: 'https://github.com/Mich2Dev/gecko_agent',
+      icon: faRobot,
+      tags: ['IA', 'LangChain', 'Hackathon']
     },
     {
-      title: 'Tienda E-commerce',
-      description: 'Plataforma de comercio electrónico full stack con React, gestión de estado avanzada, carrito de compras dinámico y sistema de pagos integrado. Arquitectura modular y escalable.',
-      link: 'https://github.com/Mich2Dev/tienda',
-      image: '/images/startup-landing.svg',
-    },
-    {
-      title: 'Sistema de Calibración IA',
-      description: 'Herramienta de visión por computadora para calibración automática mediante detección de dígitos analógicos. Implementa YOLO y procesamiento de imágenes en tiempo real.',
+      title: 'Sistema de Calibración Vanti',
+      description: 'Sistema de visión por computadora para calibración automática de medidores de gas en laboratorio usando YOLO.',
       link: 'https://github.com/Mich2Dev/vanti',
-      image: '/images/task-manager.svg',
+      icon: faGaugeHigh,
+      tags: ['YOLO', 'Computer Vision', 'IoT']
     },
     {
-      title: 'Cargo - Gestión Logística',
-      description: 'Backend robusto para gestión logística con Node.js, Express y PostgreSQL. Incluye autenticación JWT, middleware de seguridad, tracking en tiempo real y arquitectura RESTful escalable.',
+      title: 'Cargo - Transporte de Carga',
+      description: 'Plataforma para camioneros y transporte de carga. Backend robusto con autenticación JWT y tracking en tiempo real.',
       link: 'https://github.com/Mich2Dev/cargo',
-      image: '/images/task-manager.svg',
+      icon: faTruck,
+      tags: ['Node.js', 'PostgreSQL', 'REST API']
+    },
+    {
+      title: 'Tienda de Accesorios',
+      description: 'E-commerce de accesorios desarrollado con arquitectura MVC en PHP. Sistema completo de gestión de productos y ventas.',
+      link: 'https://github.com/Mich2Dev/Lalau',
+      icon: faShoppingBag,
+      tags: ['PHP', 'MVC', 'E-commerce']
     },
   ];
 
   return (
     <section className="projects container" id="projects">
-      <h2 className="animate-slide-up">
-        <span className="typing-title-projects">{typedTitle}</span>
-        {typedTitle.length < titleText.length && <span className="cursor-projects"></span>}
-      </h2>
-      <div className="project-list">
+      <h2 className="section-title">Proyectos & Repositorio</h2>
+      <div className="modern-project-grid">
         {projects.map((project, index) => (
           <ProjectCard
             key={index}
@@ -122,7 +87,8 @@ export default function Projects() {
             title={project.title}
             description={project.description}
             link={project.link}
-            image={project.image}
+            icon={project.icon}
+            tags={project.tags}
           />
         ))}
       </div>

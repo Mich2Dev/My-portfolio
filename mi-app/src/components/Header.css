@@ -4,10 +4,11 @@
     flex-direction: column;
     align-items: center;
     padding: clamp(60px, 10vw, 100px) 20px;
-    background: linear-gradient(135deg, #000000 0%, #0a0a0f 50%, #111118 100%);
+    background: linear-gradient(135deg, rgba(0, 0, 0, 0.4) 0%, rgba(10, 10, 15, 0.5) 50%, rgba(17, 17, 24, 0.4) 100%);
     color: white;
     position: relative;
     overflow: hidden;
+    backdrop-filter: blur(10px);
 }
 
 /* Efecto de partículas flotantes */
@@ -94,7 +95,7 @@
 .hero-left h1 {
     font-size: clamp(2.5rem, 5vw + 0.5rem, 4rem); 
     margin-bottom: 16px;
-    background: linear-gradient(135deg, #ffffff 0%, rgba(139, 92, 246, 0.9) 100%);
+    background: linear-gradient(135deg, #ffffff 0%, rgba(220, 200, 255, 0.95) 50%, rgba(180, 140, 255, 0.85) 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -113,7 +114,7 @@
 .subtitle {
     font-size: 1.15rem;
     font-weight: 600;
-    color: rgba(139, 92, 246, 0.8);
+    color: rgba(200, 200, 220, 0.9);
     margin-bottom: 30px;
     letter-spacing: 0.5px;
     line-height: 1.6;
@@ -129,7 +130,11 @@
 
 /* Typing effect épico */
 .typing-container {
-    margin: 24px 0;
+    margin: 20px 0;
+    padding: 16px 20px;
+    background: linear-gradient(135deg, rgba(79, 70, 229, 0.08), rgba(139, 92, 246, 0.08));
+    border-left: 3px solid rgba(79, 70, 229, 0.6);
+    border-radius: 8px;
     opacity: 0;
     transform: translateY(20px);
     transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
@@ -141,13 +146,12 @@
 }
 
 .typing-text {
-    font-size: 1.3rem;
+    font-size: 1.15rem;
     font-weight: 600;
-    color: rgba(79, 70, 229, 0.9);
-    font-style: italic;
+    color: rgba(139, 92, 246, 1);
     line-height: 1.6;
-    text-shadow: 0 0 20px rgba(79, 70, 229, 0.3);
-    min-height: 60px;
+    text-shadow: 0 2px 8px rgba(79, 70, 229, 0.2);
+    min-height: auto;
 }
 
 .cursor {
@@ -166,9 +170,9 @@
 .brief {
     font-size: 1.05rem;
     line-height: 1.8;
-    color: rgba(229, 231, 235, 0.8);
-    max-width: 600px;
-    margin: 0 0 30px;
+    color: rgba(229, 231, 235, 0.85);
+    max-width: 550px;
+    margin: 20px 0 30px;
     opacity: 0;
     transform: translateY(20px);
     transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
@@ -276,14 +280,18 @@
 
 .avatar-img {
     transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    border: 3px solid rgba(79, 70, 229, 0.3);
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6), 0 0 40px rgba(79, 70, 229, 0.2);
+    border: 4px solid rgba(79, 70, 229, 0.4);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.7), 
+                0 0 50px rgba(79, 70, 229, 0.3),
+                inset 0 0 20px rgba(79, 70, 229, 0.1);
 }
 
 .avatar:hover .avatar-img {
-    transform: scale(1.05);
-    border-color: rgba(139, 92, 246, 0.6);
-    box-shadow: 0 12px 48px rgba(0, 0, 0, 0.8), 0 0 60px rgba(79, 70, 229, 0.4);
+    transform: scale(1.05) rotate(2deg);
+    border-color: rgba(139, 92, 246, 0.7);
+    box-shadow: 0 16px 56px rgba(0, 0, 0, 0.9), 
+                0 0 70px rgba(79, 70, 229, 0.5),
+                inset 0 0 30px rgba(79, 70, 229, 0.2);
 }
 
 /* ======================= ICONOS SOCIALES ======================= */
@@ -332,8 +340,8 @@
 @media (max-width: 900px) {
     .hero-card {
         flex-direction: column;
-        gap: 40px;
-        padding: 40px 30px;
+        gap: 30px;
+        padding: 30px 25px;
     }
     
     .hero-left,
@@ -344,6 +352,13 @@
 
     .hero-right {
         order: -1;
+        display: flex;
+        justify-content: center;
+        margin-bottom: 0;
+    }
+    
+    .avatar-glow {
+        margin: 0 auto;
     }
 
     .contact-info {
@@ -357,15 +372,21 @@
 
 @media (max-width: 500px) {
     .header {
-        padding: 60px 15px;
+        padding: 50px 15px;
     }
 
     .hero-card {
-        padding: 30px 20px;
+        padding: 25px 20px;
+        gap: 25px;
+    }
+    
+    .hero-right {
+        margin-bottom: 0;
     }
 
     .greeting {
         font-size: 1rem;
+        margin-bottom: 10px;
     }
 
     .subtitle {
@@ -391,7 +412,7 @@
     }
 
     .avatar-glow {
-        width: 200px;
-        height: 200px;
+        width: 180px;
+        height: 180px;
     }
 }

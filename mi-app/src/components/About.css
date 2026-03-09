@@ -21,32 +21,31 @@
     background-clip: text;
 }
 
-/* Filas intercaladas */
-.about-row {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 40px;
-    align-items: center;
-    margin-bottom: 50px;
+/* Contenido de texto simplificado */
+.about-text-content {
+    max-width: 900px;
+    margin: 0 auto 40px auto;
+    padding: 0 20px;
 }
 
-.about-row.reverse {
-    direction: ltr;
+.about-text-content .lead,
+.about-text-content .tease {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: rgba(229, 231, 235, 0.85);
+    margin-bottom: 25px;
+    text-align: justify;
 }
 
-.about-row.center {
-    grid-template-columns: 1fr;
-    justify-items: center;
+/* Botón CV centrado */
+.about-cta-center {
+    text-align: center;
+    margin: 40px 0 60px 0;
 }
 
-/* Fila completa para AI */
-.about-row-full {
-    margin-bottom: 50px;
-}
-
-/* Bloques de texto */
-.about-text-block {
-    padding: 20px;
+.about-cta-center .btn {
+    padding: 14px 32px;
+    font-size: 1.05rem;
 }
 
 .lead {
@@ -272,10 +271,11 @@
     max-width: 1100px;
     margin: 40px auto;
     padding: 24px 18px;
-    background: rgba(255,255,255,0.04);
+    background: rgba(255,255,255,0.02);
     border-radius: 18px;
     box-shadow: 0 6px 24px rgba(0,0,0,0.18);
-    border: 2px solid rgba(255,255,255,0.13);
+    border: 2px solid rgba(255,255,255,0.08);
+    backdrop-filter: blur(10px);
 }
 
 .awards-title {

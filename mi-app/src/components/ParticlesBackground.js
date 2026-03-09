@@ -49,30 +49,30 @@ export default function ParticlesBackground() {
       }
     }
 
-    // Aumentar número de partículas
-    const particleCount = Math.min(80, Math.floor((canvas.width * canvas.height) / 20000));
+    // Aumentar número de partículas para más magia
+    const particleCount = Math.min(150, Math.floor((canvas.width * canvas.height) / 15000));
     for (let i = 0; i < particleCount; i++) {
       particles.push(new Particle());
     }
 
-    // Conectar partículas cercanas (optimizado)
+    // Conectar partículas cercanas (optimizado) - más conexiones para más magia
     const connectParticles = () => {
-      const maxDistance = 140;
+      const maxDistance = 160;
       const maxDistanceSquared = maxDistance * maxDistance; // Evitar sqrt
       
       for (let i = 0; i < particles.length; i++) {
         let connectionsCount = 0;
         for (let j = i + 1; j < particles.length; j++) {
-          if (connectionsCount >= 4) break; // Limitar conexiones por partícula
+          if (connectionsCount >= 5) break; // Más conexiones por partícula
           
           const dx = particles[i].x - particles[j].x;
           const dy = particles[i].y - particles[j].y;
           const distanceSquared = dx * dx + dy * dy;
 
           if (distanceSquared < maxDistanceSquared) {
-            const opacity = (1 - Math.sqrt(distanceSquared) / maxDistance) * 0.35;
+            const opacity = (1 - Math.sqrt(distanceSquared) / maxDistance) * 0.4;
             ctx.strokeStyle = `rgba(79, 70, 229, ${opacity})`;
-            ctx.lineWidth = 0.8;
+            ctx.lineWidth = 1;
             ctx.beginPath();
             ctx.moveTo(particles[i].x, particles[i].y);
             ctx.lineTo(particles[j].x, particles[j].y);

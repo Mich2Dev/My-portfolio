@@ -17,7 +17,7 @@ export default function Header() {
     avatar: false
   });
   
-  const fullText = "Construyendo el futuro con React, Python, IA y sistemas embebidos. De la idea al código, del código a la realidad.";
+  const fullText = "Código que escala • Soluciones que innovan • Resultados que importan";
   
   useEffect(() => {
     // Estrategia de aparición progresiva
@@ -68,7 +68,7 @@ export default function Header() {
             <div className={`greeting ${showElements.greeting ? 'show' : ''}`}>Hola, soy</div>
             <h1 className={`name ${showElements.name ? 'show' : ''}`}>Michael Menco Cuello</h1>
             <p className={`subtitle ${showElements.subtitle ? 'show' : ''}`}>
-              Full Stack Developer • AI & Computer Vision • Industrial Automation
+              Full Stack • IA & Computer Vision • Automatización
             </p>
             
             <div className={`typing-container ${showElements.typing ? 'show' : ''}`}>
@@ -79,10 +79,9 @@ export default function Header() {
             </div>
 
             <p className={`brief ${showElements.brief ? 'show' : ''}`}>
-              Ingeniero de software que domina el stack completo: desde APIs REST con Node.js y 
-              Express hasta interfaces dinámicas con React. Especializado en integrar inteligencia 
-              artificial (YOLO, TensorFlow, LangChain) con sistemas embebidos y automatización industrial. 
-              Transformo desafíos complejos en soluciones elegantes que escalan.
+              Desarrollador Full Stack especializado en IA y Computer Vision. Creo soluciones completas 
+              desde el backend hasta interfaces de usuario intuitivas. Integro inteligencia artificial 
+              en sistemas de automatización industrial y aplicaciones empresariales.
             </p>
 
             <div className={`contact-info ${showElements.contact ? 'show' : ''}`}>
