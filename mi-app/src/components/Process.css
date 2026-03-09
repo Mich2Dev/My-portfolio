@@ -266,38 +266,39 @@
 
 @media (max-width: 480px) {
   .process-section {
-    padding: 50px 12px;
+    padding: 50px 16px;
   }
 
   .process-title {
     font-size: 1.8rem;
   }
 
+  /* Cambiar a 1 columna en móviles pequeños */
   .process-grid {
-    grid-template-columns: repeat(3, 1fr);
-    gap: 12px;
+    grid-template-columns: 1fr;
+    gap: 20px;
   }
 
   .process-card {
-    padding: 18px 12px;
+    padding: 28px 24px;
   }
 
   .process-icon {
-    width: 50px;
-    height: 50px;
+    width: 70px;
+    height: 70px;
   }
 
   .process-icon svg {
-    font-size: 1.5rem;
+    font-size: 2rem;
   }
   
   .process-card h3 {
-    font-size: 0.95rem;
+    font-size: 1.3rem;
   }
   
   .process-card p {
-    font-size: 0.75rem;
-    line-height: 1.5;
+    font-size: 0.9rem;
+    line-height: 1.6;
   }
 
   .methodology-section {
