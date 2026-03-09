@@ -35,6 +35,213 @@ export default function AIBot() {
   
   const icons = useMemo(() => [faRobot, faBrain, faCode, faLaptopCode, faTrophy, faRocket], []);
   
+  // Calcular posición CSS y mensaje contextual basado EXACTAMENTE en el CV
+  const getPositionAndMessage = useCallback(() => {
+    // Mensajes organizados con COHERENCIA NARRATIVA - cada mensaje tiene contexto completo
+    const zones = [
+      // ZONA 1: PRESENTACIÓN INICIAL
+      {
+        position: { bottom: '60%', left: '50%' },
+        messages: [
+          '👋 Hola, soy el asistente de Michael Menco',
+          '🤖 Te mostraré su portafolio profesional',
+        ]
+      },
+      
+      // ZONA 2: QUIÉN ES
+      {
+        position: { bottom: '58%', left: '70%' },
+        messages: [
+          '👨‍💻 Michael Menco - Ingeniero Full Stack',
+          '📍 Desarrollador de Barranquilla, Colombia',
+        ]
+      },
+      
+      // ZONA 3: ESPECIALIZACIÓN
+      {
+        position: { bottom: '56%', left: '30%' },
+        messages: [
+          '🎯 Experto en IA y Computer Vision',
+          '⚡ Desarrollador Full Stack con automatización',
+        ]
+      },
+      
+      // ZONA 4: CONTACTO PRINCIPAL
+      {
+        position: { bottom: '54%', left: '25%' },
+        messages: [
+          '📧 Contáctalo: mencocuellomaicol@gmail.com',
+          '📱 WhatsApp disponible: +57 301 313 7911',
+        ]
+      },
+      
+      // ZONA 5: STACK BACKEND
+      {
+        position: { bottom: '50%', left: '70%' },
+        messages: [
+          '⚙️ Domina Backend: .NET/C#, Python, Node.js',
+          '🗄️ Maneja bases de datos SQL y PostgreSQL',
+        ]
+      },
+      
+      // ZONA 6: STACK FRONTEND
+      {
+        position: { bottom: '48%', left: '25%' },
+        messages: [
+          '⚛️ Crea interfaces con React y JavaScript',
+          '🎨 Diseña con HTML5, CSS3 y Bootstrap',
+        ]
+      },
+      
+      // ZONA 7: INTELIGENCIA ARTIFICIAL
+      {
+        position: { bottom: '46%', left: '70%' },
+        messages: [
+          '🤖 Implementa IA con YOLO y TensorFlow',
+          '🧠 Usa LangChain para procesamiento de texto',
+        ]
+      },
+      
+      // ZONA 8: DEVOPS Y HERRAMIENTAS
+      {
+        position: { bottom: '44%', left: '30%' },
+        messages: [
+          '🐳 Trabaja con Docker, Git y AWS',
+          '🔧 Automatiza procesos industriales e IoT',
+        ]
+      },
+      
+      // ZONA 9: FILOSOFÍA DE TRABAJO
+      {
+        position: { bottom: '42%', left: '50%' },
+        messages: [
+          '💡 Construye soluciones inteligentes y adaptables',
+          '🏗️ Diseña arquitecturas escalables y limpias',
+        ]
+      },
+      
+      // ZONA 10: LOGRO PRINCIPAL
+      {
+        position: { bottom: '38%', left: '50%' },
+        messages: [
+          '🏆 Ganó 1er Lugar en Hackathon de IA 2024',
+          '🥇 Hackathon Barranqui-IA organizado por Google',
+          '⭐ Primera competencia de IA en el Caribe',
+        ]
+      },
+      
+      // ZONA 11: PROYECTO 1 - MICH2DEV
+      {
+        position: { bottom: '32%', left: '20%' },
+        messages: [
+          '💻 Mich2dev: Su repositorio de arquitecturas',
+          '📚 Contiene implementaciones avanzadas',
+          '🏗️ Código escalable y bien documentado',
+        ]
+      },
+      
+      // ZONA 12: PROYECTO 2 - E-COMMERCE
+      {
+        position: { bottom: '30%', left: '50%' },
+        messages: [
+          '🛒 E-commerce Full Stack funcional',
+          '⚛️ Desarrollado con React y estado avanzado',
+          '💳 Incluye carrito, pagos e inventario',
+        ]
+      },
+      
+      // ZONA 13: PROYECTO 3 - IA CALIBRACIÓN
+      {
+        position: { bottom: '28%', left: '80%' },
+        messages: [
+          '🤖 Sistema de Calibración con IA',
+          '📹 Usa Computer Vision y YOLO en tiempo real',
+          '🎯 Detecta dígitos analógicos automáticamente',
+        ]
+      },
+      
+      // ZONA 14: PROYECTO 4 - CARGO
+      {
+        position: { bottom: '26%', left: '35%' },
+        messages: [
+          '📦 Cargo: Sistema de Gestión Logística',
+          '🔐 Backend con Node.js y PostgreSQL',
+          '🔒 Seguridad con JWT y tracking completo',
+        ]
+      },
+      
+      // ZONA 15: MENÚ SOCIAL
+      {
+        position: { bottom: '50%', left: '92%' },
+        messages: [
+          '🌐 Visita su GitHub: Mich2Dev',
+          '💼 Conéctate con él en LinkedIn',
+          '📱 Escríbele por WhatsApp o Email',
+        ]
+      },
+      
+      // ZONA 16: LLAMADO A LA ACCIÓN - CONTACTO
+      {
+        position: { bottom: '18%', left: '50%' },
+        messages: [
+          '📧 ¿Tienes un proyecto? Contáctalo ahora',
+          '💬 Responde rápido y trabaja remoto',
+          '🤝 Está disponible para colaborar',
+        ]
+      },
+      
+      // ZONA 17: CIERRE PROFESIONAL
+      {
+        position: { bottom: '10%', left: '50%' },
+        messages: [
+          '✨ Convierte ideas en software real',
+          '🚀 Busca nuevos desafíos técnicos',
+          '💼 Ubicado en Barranquilla - Remoto OK',
+        ]
+      },
+    ];
+
+    const zone = zones[currentSection % zones.length];
+    const message = zone.messages[Math.floor(Math.random() * zone.messages.length)];
+    
+    console.log('🤖 Bot en zona:', currentSection % zones.length, '| Mensaje:', message);
+    
+    return {
+      position: zone.position,
+      message: message
+    };
+  }, [currentSection]);
+
+  // Activar bot con el primer evento (scroll, hover o clic) - SOLO UNA VEZ
+  const activateBot = useCallback(() => {
+    if (!hasGreeted && isVisible) {
+      setHasGreeted(true);
+      
+      // Saludo inicial sin sonar a publicidad
+      const greetings = [
+        '👋 Asistente de Michael. Interactúa conmigo',
+        '🤖 Bot de Michael Menco. Toca para explorar',
+        '✨ Asistente virtual. Toca aquí',
+        '🎯 Explora el portafolio. Toca el bot',
+      ];
+      
+      setMessage(greetings[Math.floor(Math.random() * greetings.length)]);
+      setFaceExpression('excited');
+      setBotAnimation('wiggle');
+      
+      setTimeout(() => {
+        setFaceExpression('talking');
+        setBotAnimation('');
+      }, 800);
+      
+      setTimeout(() => {
+        setFaceExpression('happy');
+        // Activar el bot después del saludo
+        setIsActive(true);
+      }, 3000);
+    }
+  }, [hasGreeted, isVisible]);
+  
   const startTour = () => {
     setMessage('🎯 Recorrido iniciado. Sígueme');
     setFaceExpression('excited');
@@ -587,183 +794,6 @@ export default function AIBot() {
     };
   }, [isActive, hasGreeted, hoveredZone, isTyping]);
 
-  // Calcular posición CSS y mensaje contextual basado EXACTAMENTE en el CV
-  const getPositionAndMessage = useCallback(() => {
-    // Mensajes organizados con COHERENCIA NARRATIVA - cada mensaje tiene contexto completo
-    const zones = [
-      // ZONA 1: PRESENTACIÓN INICIAL
-      {
-        position: { bottom: '60%', left: '50%' },
-        messages: [
-          '👋 Hola, soy el asistente de Michael Menco',
-          '🤖 Te mostraré su portafolio profesional',
-        ]
-      },
-      
-      // ZONA 2: QUIÉN ES
-      {
-        position: { bottom: '58%', left: '70%' },
-        messages: [
-          '👨‍💻 Michael Menco - Ingeniero Full Stack',
-          '📍 Desarrollador de Barranquilla, Colombia',
-        ]
-      },
-      
-      // ZONA 3: ESPECIALIZACIÓN
-      {
-        position: { bottom: '56%', left: '30%' },
-        messages: [
-          '🎯 Experto en IA y Computer Vision',
-          '⚡ Desarrollador Full Stack con automatización',
-        ]
-      },
-      
-      // ZONA 4: CONTACTO PRINCIPAL
-      {
-        position: { bottom: '54%', left: '25%' },
-        messages: [
-          '📧 Contáctalo: mencocuellomaicol@gmail.com',
-          '📱 WhatsApp disponible: +57 301 313 7911',
-        ]
-      },
-      
-      // ZONA 5: STACK BACKEND
-      {
-        position: { bottom: '50%', left: '70%' },
-        messages: [
-          '⚙️ Domina Backend: .NET/C#, Python, Node.js',
-          '🗄️ Maneja bases de datos SQL y PostgreSQL',
-        ]
-      },
-      
-      // ZONA 6: STACK FRONTEND
-      {
-        position: { bottom: '48%', left: '25%' },
-        messages: [
-          '⚛️ Crea interfaces con React y JavaScript',
-          '🎨 Diseña con HTML5, CSS3 y Bootstrap',
-        ]
-      },
-      
-      // ZONA 7: INTELIGENCIA ARTIFICIAL
-      {
-        position: { bottom: '46%', left: '70%' },
-        messages: [
-          '🤖 Implementa IA con YOLO y TensorFlow',
-          '🧠 Usa LangChain para procesamiento de texto',
-        ]
-      },
-      
-      // ZONA 8: DEVOPS Y HERRAMIENTAS
-      {
-        position: { bottom: '44%', left: '30%' },
-        messages: [
-          '🐳 Trabaja con Docker, Git y AWS',
-          '🔧 Automatiza procesos industriales e IoT',
-        ]
-      },
-      
-      // ZONA 9: FILOSOFÍA DE TRABAJO
-      {
-        position: { bottom: '42%', left: '50%' },
-        messages: [
-          '💡 Construye soluciones inteligentes y adaptables',
-          '🏗️ Diseña arquitecturas escalables y limpias',
-        ]
-      },
-      
-      // ZONA 10: LOGRO PRINCIPAL
-      {
-        position: { bottom: '38%', left: '50%' },
-        messages: [
-          '🏆 Ganó 1er Lugar en Hackathon de IA 2024',
-          '🥇 Hackathon Barranqui-IA organizado por Google',
-          '⭐ Primera competencia de IA en el Caribe',
-        ]
-      },
-      
-      // ZONA 11: PROYECTO 1 - MICH2DEV
-      {
-        position: { bottom: '32%', left: '20%' },
-        messages: [
-          '💻 Mich2dev: Su repositorio de arquitecturas',
-          '📚 Contiene implementaciones avanzadas',
-          '🏗️ Código escalable y bien documentado',
-        ]
-      },
-      
-      // ZONA 12: PROYECTO 2 - E-COMMERCE
-      {
-        position: { bottom: '30%', left: '50%' },
-        messages: [
-          '🛒 E-commerce Full Stack funcional',
-          '⚛️ Desarrollado con React y estado avanzado',
-          '💳 Incluye carrito, pagos e inventario',
-        ]
-      },
-      
-      // ZONA 13: PROYECTO 3 - IA CALIBRACIÓN
-      {
-        position: { bottom: '28%', left: '80%' },
-        messages: [
-          '🤖 Sistema de Calibración con IA',
-          '📹 Usa Computer Vision y YOLO en tiempo real',
-          '🎯 Detecta dígitos analógicos automáticamente',
-        ]
-      },
-      
-      // ZONA 14: PROYECTO 4 - CARGO
-      {
-        position: { bottom: '26%', left: '35%' },
-        messages: [
-          '📦 Cargo: Sistema de Gestión Logística',
-          '🔐 Backend con Node.js y PostgreSQL',
-          '🔒 Seguridad con JWT y tracking completo',
-        ]
-      },
-      
-      // ZONA 15: MENÚ SOCIAL
-      {
-        position: { bottom: '50%', left: '92%' },
-        messages: [
-          '🌐 Visita su GitHub: Mich2Dev',
-          '💼 Conéctate con él en LinkedIn',
-          '📱 Escríbele por WhatsApp o Email',
-        ]
-      },
-      
-      // ZONA 16: LLAMADO A LA ACCIÓN - CONTACTO
-      {
-        position: { bottom: '18%', left: '50%' },
-        messages: [
-          '📧 ¿Tienes un proyecto? Contáctalo ahora',
-          '💬 Responde rápido y trabaja remoto',
-          '🤝 Está disponible para colaborar',
-        ]
-      },
-      
-      // ZONA 17: CIERRE PROFESIONAL
-      {
-        position: { bottom: '10%', left: '50%' },
-        messages: [
-          '✨ Convierte ideas en software real',
-          '🚀 Busca nuevos desafíos técnicos',
-          '💼 Ubicado en Barranquilla - Remoto OK',
-        ]
-      },
-    ];
-
-    const zone = zones[currentSection % zones.length];
-    const message = zone.messages[Math.floor(Math.random() * zone.messages.length)];
-    
-    console.log('🤖 Bot en zona:', currentSection % zones.length, '| Mensaje:', message);
-    
-    return {
-      position: zone.position,
-      message: message
-    };
-  }, [currentSection]);
-
   const handleBotClick = () => {
     console.log('🤖 Bot clicked! hasGreeted:', hasGreeted, 'isMinimized:', isMinimized, 'showTools:', showTools);
     
@@ -870,36 +900,6 @@ export default function AIBot() {
   };
 
   const tools = sectionTools[currentSection] || sectionTools.header;
-
-  // Activar bot con el primer evento (scroll, hover o clic) - SOLO UNA VEZ
-  const activateBot = useCallback(() => {
-    if (!hasGreeted && isVisible) {
-      setHasGreeted(true);
-      
-      // Saludo inicial sin sonar a publicidad
-      const greetings = [
-        '👋 Asistente de Michael. Interactúa conmigo',
-        '🤖 Bot de Michael Menco. Toca para explorar',
-        '✨ Asistente virtual. Toca aquí',
-        '🎯 Explora el portafolio. Toca el bot',
-      ];
-      
-      setMessage(greetings[Math.floor(Math.random() * greetings.length)]);
-      setFaceExpression('excited');
-      setBotAnimation('wiggle');
-      
-      setTimeout(() => {
-        setFaceExpression('talking');
-        setBotAnimation('');
-      }, 800);
-      
-      setTimeout(() => {
-        setFaceExpression('happy');
-        // Activar el bot después del saludo
-        setIsActive(true);
-      }, 3000);
-    }
-  }, [hasGreeted, isVisible]);
 
   return (
     <div 
