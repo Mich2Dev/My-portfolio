@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import './AIBot.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { 
@@ -7,93 +7,6 @@ import {
   faEye, faAward, faProjectDiagram, faFilePdf, faRoute
 } from '@fortawesome/free-solid-svg-icons';
 import { faLinkedin as faLinkedinBrand, faGithub as faGithubBrand, faWhatsapp as faWhatsappBrand } from '@fortawesome/free-brands-svg-icons';
-
-// Mensajes globales - definidos fuera del componente para evitar recreación
-const ALL_MESSAGES = [
-  '🤖 Portafolio profesional de mi creador',
-  '💼 Te guiaré por su experiencia y proyectos',
-  '😏 Me programó con React y hooks. Código con actitud',
-  '👆 Tócame. Tengo herramientas útiles',
-  '💻 Full Stack Developer especializado en IA y Computer Vision',
-  '⚡ Stack: React, Python, Node.js, TensorFlow, YOLO',
-  '🏆 Primer lugar en Hackathon de IA 2024',
-  '🧠 Arquitecturas modernas combinando tecnologías',
-  '💡 Compitió contra equipos completos en Universidad del Norte',
-  '🎓 Portfolio: e-commerce, IA aplicada, automatización',
-  '⚙️ Automatización industrial + Computer Vision avanzada',
-  '🔥 APIs REST, microservicios, arquitectura de contenedores',
-  '🌟 YOLO para detección de objetos en tiempo real',
-  '💼 Backend escalable + frontend intuitivo + IA funcional',
-  '✨ Sistemas inteligentes con procesamiento de lenguaje natural',
-  '📖 Integración de PLC, IoT y sensores industriales',
-  '🔥 Computer Vision: YOLO, TensorFlow, OpenCV en producción',
-  '☁️ Infraestructura cloud: AWS, Docker, CI/CD automatizado',
-  '🎯 Procesamiento de video en tiempo real, latencia mínima',
-  '💼 Experiencia: IoT, RPA, calibración automática, e-commerce',
-  '⚙️ Backend: Node.js, Express, Python, .NET, PHP',
-  '🎨 Frontend: React, TailwindCSS, Bootstrap',
-  '📊 Bases de datos: SQL, PostgreSQL, MongoDB',
-  '🔧 LangChain para procesamiento de lenguaje natural',
-  '💡 Sistemas embebidos + visión artificial',
-  '🚀 Proyectos desplegados resolviendo problemas reales',
-  '👆 Presióname. Mis herramientas funcionan',
-  '💼 E-commerce completo: carrito, pagos, inventario',
-  '🤖 Calibración automática con detección YOLO',
-  '📦 Backend logístico: Node.js + PostgreSQL, alto tráfico',
-  '🏗️ Arquitecturas diseñadas para escalar',
-  '🔧 APIs: autenticación JWT, middleware, documentación',
-  '⚙️ Clean code, testing automatizado, documentación técnica',
-  '🎯 Ciclo completo: concepto hasta deploy en AWS',
-  '💡 Código en GitHub: limpio, documentado, production-ready',
-  '🔥 Tracking en tiempo real, procesamiento de imágenes',
-  '⚡ DevOps: Docker, CI/CD, deployments automatizados',
-  '🎨 UX/UI optimizado para conversión y satisfacción',
-  '😎 Herramientas útiles. Úsalas, no solo mires',
-  '😏 Me diseñó con useState y useEffect. Elegante, no?',
-  '🎨 Portafolio desde cero. Sin plantillas',
-  '💅 CSS puro para animaciones. Nada de librerías pesadas',
-  '🤖 Mis expresiones faciales: CSS animations. Pura magia',
-  '⚡ Typewriter effect: JavaScript vanilla. Rápido y limpio',
-  '🎯 Posicionamiento dinámico: cálculos matemáticos precisos',
-  '✨ Partículas y efectos: Canvas y transformaciones CSS',
-  '🔧 Herramientas circulares: trigonometría aplicada',
-  '💡 Todo responsive: media queries bien pensadas',
-  '🚀 Optimizado para performance: 60fps constantes',
-  '😎 Me creó en horas. Mientras otros usan templates',
-  '🏆 Hackathon Barranqui-IA 2024: primer lugar, Google organizó',
-  '🥇 Competencia regional contra equipos universitarios',
-  '🥉 Tercer lugar en Hackathon 2025',
-  '⭐ Soluciones bajo presión extrema en horas',
-  '💪 Resolución rápida de problemas complejos',
-  '🧠 IA aplicada a casos reales, más allá de teoría',
-  '🚀 Innovación técnica + velocidad + calidad de código',
-  '🎯 Preparación técnica sólida + código limpio',
-  '🌟 Contribución activa al ecosistema tech',
-  '🔥 Soluciones completas y funcionales en tiempo récord',
-  '💡 Liderazgo técnico efectivo, colaboración en equipos',
-  '🤓 Tócame. Herramientas que funcionan de verdad',
-  '📧 Comunicación eficiente: respuesta en menos de 24 horas',
-  '🤝 Disponible para proyectos técnicamente desafiantes',
-  '💼 Email: mencocuellomaicol@gmail.com',
-  '🌟 Transformación de ideas en software funcional y escalable',
-  '📱 WhatsApp: +57 301 313 7911',
-  '💡 Motivado por desafíos técnicos y proyectos innovadores',
-  '🚀 Contacto: LinkedIn, GitHub, Email, WhatsApp',
-  '🎯 Respuestas rápidas por eficiencia y pasión',
-  '⚡ Barranquilla, Colombia - Trabajo remoto disponible',
-  '🔥 Especialización: Full Stack, IA, Computer Vision',
-  '🌐 Proyectos locales e internacionales',
-  '💻 Modalidades: Freelance, colaboraciones, full-time',
-  '🎨 Consultoría técnica o desarrollo end-to-end',
-  '🎭 Animaciones: keyframes CSS. Suaves y fluidas',
-  '💫 Efectos de hover: transiciones calculadas al milisegundo',
-  '🎪 Tour guiado: scroll programático con smooth behavior',
-  '📦 Bot mensajero del CV: animación secuencial coordinada',
-  '🎨 Gradientes y sombras: diseño visual sin imágenes',
-  '⚙️ Estado manejado con hooks: useState, useEffect maestría',
-  '🔄 Ciclo de mensajes: setInterval inteligente sin memory leaks',
-  '👇 Desliza para ver más contenido',
-];
 
 export default function AIBot() {
   const [isVisible, setIsVisible] = useState(false);
@@ -537,7 +450,7 @@ export default function AIBot() {
       if (mouseDebounceTimer) clearTimeout(mouseDebounceTimer);
       if (scrollTimer) clearTimeout(scrollTimer);
     };
-  }, [currentSection, isVisible, showTools, faceExpression, showDeliveryBot, isActive, hasGreeted, deliveryComplete, icons, hoveredZone, isTyping, mouseDebounceTimer, scrollTimer, lastZoneChangeTime, isScrolling]);
+  }, [currentSection, isVisible, showTools, faceExpression, showDeliveryBot, isActive, hasGreeted, deliveryComplete, icons, hoveredZone, isTyping, mouseDebounceTimer, scrollTimer, lastZoneChangeTime, isScrolling, activateBot]);
 
   // Reaccionar cuando el usuario pasa el cursor por una zona
   useEffect(() => {
@@ -636,7 +549,7 @@ export default function AIBot() {
       setBotAnimation('');
     }, 2000);
     
-  }, [currentSection, isActive, isVisible, hoveredZone]);
+  }, [currentSection, isActive, isVisible, hoveredZone, getPositionAndMessage]);
 
   // Sistema de movimiento automático: cada cambio de currentSection actualiza posición y mensaje
   // SOLO si el usuario NO está interactuando con el cursor
@@ -675,7 +588,7 @@ export default function AIBot() {
   }, [isActive, hasGreeted, hoveredZone, isTyping]);
 
   // Calcular posición CSS y mensaje contextual basado EXACTAMENTE en el CV
-  const getPositionAndMessage = () => {
+  const getPositionAndMessage = useCallback(() => {
     // Mensajes organizados con COHERENCIA NARRATIVA - cada mensaje tiene contexto completo
     const zones = [
       // ZONA 1: PRESENTACIÓN INICIAL
@@ -849,7 +762,7 @@ export default function AIBot() {
       position: zone.position,
       message: message
     };
-  };
+  }, [currentSection]);
 
   const handleBotClick = () => {
     console.log('🤖 Bot clicked! hasGreeted:', hasGreeted, 'isMinimized:', isMinimized, 'showTools:', showTools);
@@ -959,7 +872,7 @@ export default function AIBot() {
   const tools = sectionTools[currentSection] || sectionTools.header;
 
   // Activar bot con el primer evento (scroll, hover o clic) - SOLO UNA VEZ
-  const activateBot = () => {
+  const activateBot = useCallback(() => {
     if (!hasGreeted && isVisible) {
       setHasGreeted(true);
       
@@ -986,7 +899,7 @@ export default function AIBot() {
         setIsActive(true);
       }, 3000);
     }
-  };
+  }, [hasGreeted, isVisible]);
 
   return (
     <div 
